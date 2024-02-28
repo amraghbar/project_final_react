@@ -15,7 +15,7 @@ function App() {
     {
       path: "/",
       element: <Root/>,
-      errorElement:<Notfound/>
+      errorElement:<Notfound/>,
       children: [
         {
           path: "/Home",
