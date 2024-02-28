@@ -8,7 +8,7 @@ import Products from './assets/Pages/Products/Products';
 import Carshop from './assets/Pages/Carts/Carshop';
 import Signin from './assets/Pages/Navbar/butoon/Signin';
 import Signup from './assets/Pages/Navbar/butoon/Signup';
-import NotFiund from './assets/Pages/NotFiund';
+import Notfound from './assets/Pages/Notfouend/Notfound';
 
 function App() {
   const router = createBrowserRouter([
@@ -18,7 +18,11 @@ function App() {
       children: [
         {
           path: "/Home",
-          element: <Home/>,
+          element: <>
+                    <Home/>
+                    <Categories/>
+
+          </>,
         },
         {
           path: "/Categories",
@@ -42,7 +46,7 @@ function App() {
         },
         {
           path: "*",
-          element: <NotFiund/>,
+          element: <Notfound/>,
         },
       ]
     },
@@ -51,7 +55,8 @@ function App() {
   return (
     <>
         <RouterProvider router={router} />
-
+<h2>  وشيكولنا ع كبسة السلة والشخص :)</h2>
+<p>وباقي الصفحات </p>
     </>
   )
 }
