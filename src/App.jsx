@@ -41,7 +41,7 @@ function App() {
           element: <Signup/>,
         },
         {
-          path: "#",
+          path: "*",
           element: <NotFiund/>,
         },
       ]
