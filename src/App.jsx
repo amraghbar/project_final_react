@@ -15,8 +15,11 @@ function App() {
     {
       path: "/",
       element: <Root/>,
-      errorElement:<Notfound/>,
       children: [
+         {
+          path: '*',
+          element: <Notfound/>
+        },
         {
           path: "/Home",
           element: <>
