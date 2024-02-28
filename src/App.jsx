@@ -8,6 +8,7 @@ import Products from './assets/Pages/Products/Products';
 import Carshop from './assets/Pages/Carts/Carshop';
 import Signin from './assets/Pages/Navbar/butoon/Signin';
 import Signup from './assets/Pages/Navbar/butoon/Signup';
+import NotFiund from './assets/Pages/NotFiund';
 
 function App() {
   const router = createBrowserRouter([
@@ -34,9 +35,14 @@ function App() {
         {
           path: "/signin",
           element: <Signin/>,
-        }, {
+        }, 
+        {
           path: "/signup",
           element: <Signup/>,
+        },
+        {
+          path: "#",
+          element: <NotFiund/>,
         },
       ]
     },
