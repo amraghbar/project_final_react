@@ -15,6 +15,7 @@ function App() {
     {
       path: "/",
       element: <Root/>,
+      errorElement:<Notfound/>
       children: [
         {
           path: "/Home",
@@ -44,11 +45,9 @@ function App() {
           path: "/signup",
           element: <Signup/>,
         },
-        {
-          path: "*",
-          element: <Notfound/>,
-        },
-      ]
+        
+      ],
+     
     },
    
   ]);
