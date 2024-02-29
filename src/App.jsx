@@ -15,19 +15,12 @@ function App() {
     {
       path: "/",
       element: <Root/>,
-  
       children: [
         {
-          path: '*',
-          element:<Notfound/>,
-        },
-        {
-          index :true,
-          path: "/home",
+          index: true,
           element: <>
-                    <Home/>
-                    <Categories/>
-
+            <Home/>
+            <Categories/>
           </>,
         },
         {
@@ -50,12 +43,14 @@ function App() {
           path: "/signup",
           element: <Signup/>,
         },
-       
+        {
+          path: '*',
+          element: <Notfound/>,
+        }
       ],
-     
     },
-   
   ]);
+  
   return (
     <>
         <RouterProvider router={router} />
