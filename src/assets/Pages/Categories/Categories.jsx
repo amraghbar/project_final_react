@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import 'swiper/swiper-bundle.css';
 function Categories() {
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
 
-  const swiperParams = {
-    slidesPerView: 'auto',
-    spaceBetween: 30,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    } // Remove the semicolon here
-  };
-
+  
   const getData = async () => {
     const { data } = await axios.get(`https://ecommerce-node4.vercel.app/categories/active?page=1&limit=9`);
     setCategories(data.categories);
@@ -39,20 +31,23 @@ function Categories() {
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Search"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <Swiper {...swiperParams}>
-        {categories.map(x => (
-          <div key={x.id}>
+     <Swiper
+      spaceBetween={0}
+      slidesPerView={5} 
+      navigation ={{ clickable: true }}
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }}
+      style={{ margin: '10px' }}
+    >
+      {categories.map((x) => (
+        <SwiperSlide key={x.id}>
+          <div>
             <h2>{x.name}</h2>
             <img src={x.image.secure_url} alt="" />
           </div>
-        ))}
-      </Swiper>
+        </SwiperSlide>
+      ))}
+    </Swiper>
     </>
   );
 }
