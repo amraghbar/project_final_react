@@ -15,10 +15,14 @@ function App() {
     {
       path: "/",
       element: <Root/>,
-      errorElement:<Notfound/>,
       children: [
         {
-          path: "/Home",
+          path: '*',
+          element: <Notfound/>
+        },
+        {
+          index :true,
+          path: "/",
           element: <>
                     <Home/>
                     <Categories/>
