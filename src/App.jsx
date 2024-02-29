@@ -26,7 +26,6 @@ function App() {
         },
         {
           index :true,
-          path: "/",
           element: <>
                     <Home/>
                     <Categories/>
