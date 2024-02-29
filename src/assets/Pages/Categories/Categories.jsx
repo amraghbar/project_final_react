@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+
 function Categories() {
   const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
 
-  
   const getData = async () => {
     const { data } = await axios.get(`https://ecommerce-node4.vercel.app/categories/active?page=1&limit=9`);
     setCategories(data.categories);
@@ -32,11 +32,10 @@ function Categories() {
   return (
     <>
      <Swiper
-      spaceBetween={0}
-      slidesPerView={5} 
-      navigation ={{ clickable: true }}
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
+       spaceBetween={40}
+       slidesPerView={5.5} 
+       loop={true}
+       pagination={{ clickable: true }}
       style={{ margin: '10px' }}
     >
       {categories.map((x) => (

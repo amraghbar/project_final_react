@@ -17,7 +17,10 @@ function App() {
       element: <Root/>,
   
       children: [
-    
+        {
+          path: '*',
+          element:<Notfound/>,
+        },
         {
           index :true,
           path: "/home",
@@ -47,10 +50,7 @@ function App() {
           path: "/signup",
           element: <Signup/>,
         },
-        {
-          path: '*',
-          element:<Notfound/>,
-        },
+       
       ],
      
     },
