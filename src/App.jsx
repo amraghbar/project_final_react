@@ -16,16 +16,14 @@ function App() {
       path: "/",
       element: <Root/>,
       children: [
-         {
-          path: '*',
-          element: <Notfound/>
-        },
+  
         {
           path: '*',
           element: <Notfound/>
         },
         {
           index :true,
+      
           element: <>
                     <Home/>
                     <Categories/>
