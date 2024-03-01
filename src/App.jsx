@@ -9,6 +9,7 @@ import Carshop from './assets/Pages/Carts/Carshop';
 import Signin from './assets/Pages/Navbar/butoon/Signin';
 import Signup from './assets/Pages/Navbar/butoon/Signup';
 import Notfound from './assets/Pages/Notfouend/Notfound';
+import Hero from './assets/Pages/Hero/Hero';
 
 function App() {
   const router = createBrowserRouter([
@@ -20,6 +21,7 @@ function App() {
           index: true,
           element: <>
             <Home/>
+            <Hero/>
             <Categories/>
           </>,
         },
@@ -27,6 +29,8 @@ function App() {
           path: "/Home",
           element: <>
           <Home/>
+          <Hero/>
+
           <Categories/>
         </>,
         },

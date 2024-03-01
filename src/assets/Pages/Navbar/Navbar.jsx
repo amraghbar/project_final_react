@@ -11,8 +11,10 @@ function Navbar() {
   const handleClose = () => setShow(false);
   return (
   <>
-     <nav className="navbar navbar-expand-md bg-danger ">
+
+     <nav className="  navbar navbar-expand-md bg-danger position-sticky shadow p-4 mb-8  rounded">
   <div className="container-fluid">
+  <a class="navbar-brand text-primary" href="#">Shope</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon">
       </span></button>
@@ -20,7 +22,7 @@ function Navbar() {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-          <NavLink className="nav-link text-light" to='/Home'>Shop </NavLink>
+          <NavLink className="nav-link text-light" to='/Home'> Home </NavLink>
         </li>
         <li className="nav-item">
           <NavLink className="nav-link text-light" to='/Categories'>Categories</NavLink>
