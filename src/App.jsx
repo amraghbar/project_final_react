@@ -24,6 +24,13 @@ function App() {
           </>,
         },
         {
+          path: "/Home",
+          element: <>
+          <Home/>
+          <Categories/>
+        </>,
+        },
+        {
           path: "/Categories",
           element: <Categories/>,
         },
