@@ -35,18 +35,9 @@ ul li {
     width: 400px;
 }
 
-.se1 .pos {
-    position: absolute;
-    top: 143px;
-    left: 163px;
-    color: #545BE8;
-    font-family: 'Inter', sans-serif;
 
-}
 
-.se1 .pos .be {
-    font-weight: 800;
-}
+
 
 .se1 .word h2 {
     font-size: 45px;
@@ -68,46 +59,7 @@ ul li {
     font-weight: 400;
 }
 
-.se1 .inpyt {
-    padding-top: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
 
-}
-
-.se1 .inpyt .reg {
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 30px;
-    padding-right: 30px;
-    font-family: 'Inter', sans-serif;
-    border-radius: 10px;
-    font-size: 14px;
-
-}
-
-.se1 .inpyt .playimg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-}
-
-.se1 .playimg img {
-    width: 24px;
-
-}
-
-.se1 .playimg a {
-    padding-left: 4px;
-    color: #141E32;
-    font-size: 15px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-}
 
 .se1 .cuimg {
     overflow: hidden;

@@ -5,9 +5,7 @@ function Hero() {
     <section class={style.se1}> 
 <div className={style.counter}>
   <div className={style.word}>
-    <div className={style.pos}>
-    Categories
-    </div>
+    
     <h2>Let us find 
       <span className={style.cour}>what's right </span>
       For you
