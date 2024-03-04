@@ -12,7 +12,7 @@ function Navbar() {
   return (
   <>
 
-     <nav className="  navbar navbar-expand-md bg-danger position-sticky shadow p-4 mb-8  rounded z-index: 9">
+     <nav className="  navbar navbar-expand-md bg-danger position-sticky shadow p-4 mb-8  rounded ">
   <div className="container-fluid">
     <a className="navbar-brand text-primary" href="#">Shope</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@ function Navbar() {
             </svg>
           </button>
         </NavLink>
-        <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas show={show} onHide={handleClose} style={{ zIndex: 9999999 }}>
   <Offcanvas.Header closeButton>
     <Offcanvas.Title>Shopping cart</Offcanvas.Title>
   </Offcanvas.Header>
