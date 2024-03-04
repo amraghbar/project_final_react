@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import axios from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import { object, string } from "yup";
 
 function Signup() {
+  const [errors, setError] = useState([]);
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -25,49 +26,69 @@ function Signup() {
       [name]: files[0],
     });
   };
-  const handelSubmit = async (e) => {
+  const validationData = async () => {
+    const regiSchema = object({
+      userName: string().required().min(5).max(20),
+      email: string().email().required(),
+      password: string().required().min(5).max(20),
+      image: string().required(),
+    });
+  
     try {
-      e.preventDefault();
-      const fromData = new FormData();
-      fromData.append("userName", user.userName);
-      fromData.append("email", user.email);
-      fromData.append("password", user.password);
-      fromData.append("image", user.image);
-  
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API}/auth/signup`,
-        fromData
-      );
-     
-     
-     setUser({
-      userName: "",
-      email: "",
-      password: "",
-      image: "",
-    });
-  
-    toast.success("Success Notification !", {
-    });
-     
+      await regiSchema.validate(user, { abortEarly: false });
+      setError('');
+
+      return true; // Validation succeeded
+    } catch (err) {
+      console.log("err", err.errors);
+      setError(err.errors)
+      return false; // Validation failed
     }
-catch(Error) {
-  toast.error("حدث خطأ في عملية التسجيل!", {
+  };
+  
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+
+    if(await validationData()){
+      try {
+       
+        const fromData = new FormData();
+        fromData.append("userName", user.userName);
+        fromData.append("email", user.email);
+        fromData.append("password", user.password);
+        fromData.append("image", user.image);
+  
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API}/auth/signup`,
+          fromData
+        );
+  
+        setUser({
+          userName: "",
+          email: "",
+          password: "",
+          image: "",
+        });
+  
+        toast.success("Success Notification !");
+      } catch (error) {
+        console.log(error);
+        toast.error("حدث خطأ في عملية التسجيل!");
+      }
+    }
    
-  });
-}  
   };
   return (
     <>
+<div>
+  {errors.length > 0 ? errors.map((x, index) => <p key={index}>{x}</p>) : ""}
+</div>
       <div className="main-w3layouts wrapper bacgco">
         <h1>Create new account</h1>
         <div className="main-agileinfo">
           <div className="agileits-top">
             <form onSubmit={handelSubmit}>
-            <ToastContainer
-  position="top-right"
-  zIndex={999999}
-/>
               <label> User name</label>
               <input
                 type="text"
@@ -75,7 +96,6 @@ catch(Error) {
                 value={user.userName}
                 onChange={handelChange}
               />
-
               <label> email</label>
               <input
                 type="email"
@@ -83,7 +103,6 @@ catch(Error) {
                 value={user.email}
                 onChange={handelChange}
               />
-
               <label> Password</label>
               <input
                 type="password"
@@ -91,15 +110,12 @@ catch(Error) {
                 value={user.password}
                 onChange={handelChange}
               />
-
               <label>Image </label>
-
-              <br/>
+              <br />
               <input type="file" name="image" onChange={handelChangeimg} />
-              <br/>
-              <br/> <br/>
-              <button type="submit"  >submit</button>
-
+              <br />
+              <br /> <br />
+              <button type="submit">submit</button>
             </form>
             <p>
               Do You Have An Account? <a href="/signin">Sign In!</a>
