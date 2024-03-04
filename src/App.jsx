@@ -19,19 +19,13 @@ function App() {
       children: [
         {
           index: true,
-          element: <>
-            <Home/>
-            <Hero/>
-            <Categories/>
-          </>,
+          element: <Home/>,
         },
         {
           path: "/Home",
           element: <>
           <Home/>
-          <Hero/>
-
-          <Categories/>
+          
         </>,
         },
         {
@@ -61,12 +55,11 @@ function App() {
       ],
     },
   ]);
-  
+ 
   return (
     <>
         <RouterProvider router={router} />
-<h2>  وشيكولنا ع كبسة السلة والشخص :)</h2>
-<p>وباقي الصفحات </p>
+
     </>
   )
 }

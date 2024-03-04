@@ -4,31 +4,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 function Categories() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [categories, setCategories] = useState([]);
 
   const getData = async () => {
-    const { data } = await axios.get(`https://ecommerce-node4.vercel.app/categories/active?page=1&limit=9`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API}/categories/active?page=1&limit=9`);
+  
     setCategories(data.categories);
   };
 
-  const searchGetData = async () => {
-    const { data } = await axios.get(`https://dummyjson.com/products/search?q=${searchQuery}`);
-    setCategories(data.categories);
-  };
+
 
   useEffect(() => {
     getData();
   }, []);
 
-  useEffect(() => {
-    if (searchQuery.trim() !== '') {
-      searchGetData();
-    } else {
-      getData();
-    }
-  }, [searchQuery]);
-
+  
   return (
     <>
       <div style={{ paddingTop: '50px' }}>
