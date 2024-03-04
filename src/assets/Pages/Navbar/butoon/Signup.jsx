@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Signup() {
   const [user, setUser] = useState({
     userName: "",
@@ -23,30 +26,37 @@ function Signup() {
     });
   };
   const handelSubmit = async (e) => {
-    
-    e.preventDefault();
-    const fromData = new FormData();
-    fromData.append("userName", user.userName);
-    fromData.append("email", user.email);
-    fromData.append("password", user.password);
-    fromData.append("image", user.image);
-
-    const { data } = await axios.post(
-      `${import.meta.env.VITE_API}/auth/signup`,
-      fromData
-    );
-   
-   
-   setUser({
-    userName: "",
-    email: "",
-    password: "",
-    image: "",
-  });
-  console.log("تم بنجاح ")
-
-   };
+    try {
+      e.preventDefault();
+      const fromData = new FormData();
+      fromData.append("userName", user.userName);
+      fromData.append("email", user.email);
+      fromData.append("password", user.password);
+      fromData.append("image", user.image);
   
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API}/auth/signup`,
+        fromData
+      );
+     
+     
+     setUser({
+      userName: "",
+      email: "",
+      password: "",
+      image: "",
+    });
+  
+    toast.success("Success Notification !", {
+    });
+     
+    }
+catch(Error) {
+  toast.error("حدث خطأ في عملية التسجيل!", {
+   
+  });
+}  
+  };
   return (
     <>
       <div className="main-w3layouts wrapper bacgco">
@@ -54,6 +64,10 @@ function Signup() {
         <div className="main-agileinfo">
           <div className="agileits-top">
             <form onSubmit={handelSubmit}>
+            <ToastContainer
+  position="top-right"
+  zIndex={999999}
+/>
               <label> User name</label>
               <input
                 type="text"
@@ -84,7 +98,8 @@ function Signup() {
               <input type="file" name="image" onChange={handelChangeimg} />
               <br/>
               <br/> <br/>
-              <button type="submit" >submit</button>
+              <button type="submit"  >submit</button>
+
             </form>
             <p>
               Do You Have An Account? <a href="/signin">Sign In!</a>
