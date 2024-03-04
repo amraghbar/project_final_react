@@ -27,7 +27,6 @@ function Categories() {
      <Swiper
        spaceBetween={40}
        slidesPerView={5.5} 
-       loop={true}
        pagination={{ clickable: true }}
       style={{ margin: '10px' }}
     >

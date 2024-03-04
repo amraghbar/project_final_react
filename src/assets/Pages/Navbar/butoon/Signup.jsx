@@ -23,6 +23,7 @@ function Signup() {
     });
   };
   const handelSubmit = async (e) => {
+    
     e.preventDefault();
     const fromData = new FormData();
     fromData.append("userName", user.userName);
@@ -34,14 +35,18 @@ function Signup() {
       `${import.meta.env.VITE_API}/auth/signup`,
       fromData
     );
-    setUser({
-      userName: "",
-      email: "",
-      password: "",
-      image: "",
-    });
-    console.log(data);
-  };
+   
+   
+   setUser({
+    userName: "",
+    email: "",
+    password: "",
+    image: "",
+  });
+  console.log("تم بنجاح ")
+
+   };
+  
   return (
     <>
       <div className="main-w3layouts wrapper bacgco">
@@ -79,7 +84,7 @@ function Signup() {
               <input type="file" name="image" onChange={handelChangeimg} />
               <br/>
               <br/> <br/>
-              <button type="submit">submit</button>
+              <button type="submit" >submit</button>
             </form>
             <p>
               Do You Have An Account? <a href="/signin">Sign In!</a>
