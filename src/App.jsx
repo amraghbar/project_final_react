@@ -9,7 +9,7 @@ import Carshop from './assets/Pages/Carts/Carshop';
 import Signin from './assets/Pages/Navbar/butoon/Signin';
 import Signup from './assets/Pages/Navbar/butoon/Signup';
 import Notfound from './assets/Pages/Notfouend/Notfound';
-import Hero from './assets/Pages/Hero/Hero';
+import Produtc from './assets/Pages/Produtc/Produtc';
 
 function App() {
   const router = createBrowserRouter([
@@ -18,15 +18,13 @@ function App() {
       element: <Root/>,
       children: [
         {
-          index: true,
+          path:'/',
           element: <Home/>,
         },
         {
           path: "/Home",
-          element: <>
-          <Home/>
-          
-        </>,
+          element: <Home/>,
+        
         },
         {
           path: "/Categories",
@@ -35,6 +33,10 @@ function App() {
         {
           path: "/Products/:id",
           element: <Products/>,
+        },
+        {
+          path: "/Products/:id/Produtc/:id",
+          element: <Produtc/>,
         },
         {
           path: "/Carshop",

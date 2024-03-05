@@ -36,7 +36,7 @@ function Categories() {
           <div>
             <h2>{x.name}</h2>
             <img src={x.image.secure_url} alt="" />
-            <Link to={`Products?id=${x._id}`}> Details</Link> 
+            <Link to={`Products/${x._id}`}> Details</Link> 
 
           </div>
         </SwiperSlide>
