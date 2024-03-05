@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { Link } from 'react-router-dom';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -35,6 +36,8 @@ function Categories() {
           <div>
             <h2>{x.name}</h2>
             <img src={x.image.secure_url} alt="" />
+            <Link to={`Products?id=${x._id}`}> Details</Link> 
+
           </div>
         </SwiperSlide>
       ))}
