@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-function Product() {
+function Produtc() {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -64,4 +64,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Produtc;
