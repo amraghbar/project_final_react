@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import "./Navbar.css";
 import style from "../Carts/Cartshop.module.css";
 import { Button, Offcanvas } from "react-bootstrap";
@@ -14,9 +14,9 @@ function Navbar() {
     <>
       <nav className="  navbar navbar-expand-md bg-danger position-sticky shadow p-4 mb-8  rounded ">
         <div className="container-fluid">
-          <a className="navbar-brand text-primary" href="#">
+          <Link className="navbar-brand text-primary" to="/">
             Shope
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -31,9 +31,9 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <NavLink className="nav-link text-light" to="/Home">
-                  {" "}
-                  Home{" "}
+                <NavLink className="nav-link text-light" to="/">
+
+                  Home
                 </NavLink>
               </li>
               <li className="nav-item">
