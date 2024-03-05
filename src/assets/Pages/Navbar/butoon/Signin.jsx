@@ -3,6 +3,7 @@ import "./Signup.css";
 import axios from "axios";
 import { object, string } from "yup";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function Signin() {
   const [errors, setError] = useState([]);
@@ -92,7 +93,7 @@ function Signin() {
               </button>
             </form>
             <p>
-              <a href="/signup">Create new account</a>
+              <Link to="/signup">Create new account</Link>
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import "./Signup.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { object, string } from "yup";
+import { Link } from "react-router-dom";
 
 function Signup() {
   const [errors, setError] = useState([]);
@@ -33,57 +34,56 @@ function Signup() {
       password: string().required().min(5).max(20),
       image: string().required(),
     });
-  
+
     try {
       await regiSchema.validate(user, { abortEarly: false });
-      setError('');
+      setError("");
 
       return true; // Validation succeeded
     } catch (err) {
       console.log("err", err.errors);
-      setError(err.errors)
+      setError(err.errors);
       return false; // Validation failed
     }
   };
-  
 
   const handelSubmit = async (e) => {
     e.preventDefault();
 
-    if(await validationData()){
+    if (await validationData()) {
       try {
-       
         const fromData = new FormData();
         fromData.append("userName", user.userName);
         fromData.append("email", user.email);
         fromData.append("password", user.password);
         fromData.append("image", user.image);
-  
+
         const { data } = await axios.post(
           `${import.meta.env.VITE_API}/auth/signup`,
           fromData
         );
-  
+
         setUser({
           userName: "",
           email: "",
           password: "",
           image: "",
         });
-  
+
         toast.success("Success Notification !");
       } catch (error) {
         console.log(error);
         toast.error("حدث خطأ في عملية التسجيل!");
       }
     }
-   
   };
   return (
     <>
-<div>
-  {errors.length > 0 ? errors.map((x, index) => <p key={index}>{x}</p>) : ""}
-</div>
+      <div>
+        {errors.length > 0
+          ? errors.map((x, index) => <p key={index}>{x}</p>)
+          : ""}
+      </div>
       <div className="main-w3layouts wrapper bacgco">
         <h1>Create new account</h1>
         <div className="main-agileinfo">
@@ -118,7 +118,7 @@ function Signup() {
               <button type="submit">submit</button>
             </form>
             <p>
-              Do You Have An Account? <a href="/signin">Sign In!</a>
+              Do You Have An Account? <Link to="/signin">Sign In!</Link>
             </p>
           </div>
         </div>
