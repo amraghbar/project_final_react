@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./Signup.css";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { Bounce, Slide, toast } from "react-toastify";
 import { object, string } from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [errors, setError] = useState([]);
+  const navgate=useNavigate();
+  const [loader,setLoadr]=useState(false);
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -27,7 +29,61 @@ function Signup() {
       [name]: files[0],
     });
   };
-  const validationData = async () => {
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    setLoadr(true)
+    if (await validationData()) {
+      const fromData = new FormData();
+      fromData.append("userName", user.userName);
+      fromData.append("email", user.email);
+      fromData.append("password", user.password);
+      fromData.append("image", user.image);
+
+      try {
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API}/auth/signup`,
+          fromData
+        );
+        setUser({
+          userName: "",
+          email: "",
+          password: "",
+          image: "",
+        });
+        if (data.message == "success") {
+          toast.success("تم التجسيل بنجاح !", {
+            position: "bottom-center",
+            autoClose: 5018,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+        }
+        navgate('/')
+      } catch (err) {
+        toast.error("حدث خطأ أثناء التسجيل!", {
+            position: "bottom-center",
+            autoClose: 5018,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
+      }
+      finally {
+        setLoadr(false);
+      }
+    }
+  };
+
+const validationData = async () => {
     const regiSchema = object({
       userName: string().required().min(5).max(20),
       email: string().email().required(),
@@ -37,44 +93,12 @@ function Signup() {
 
     try {
       await regiSchema.validate(user, { abortEarly: false });
-      setError("");
-
+      setError([]); // Clear any previous errors
       return true; // Validation succeeded
     } catch (err) {
-      console.log("err", err.errors);
       setError(err.errors);
+      setLoadr(false);
       return false; // Validation failed
-    }
-  };
-
-  const handelSubmit = async (e) => {
-    e.preventDefault();
-
-    if (await validationData()) {
-      try {
-        const fromData = new FormData();
-        fromData.append("userName", user.userName);
-        fromData.append("email", user.email);
-        fromData.append("password", user.password);
-        fromData.append("image", user.image);
-
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API}/auth/signup`,
-          fromData
-        );
-
-        setUser({
-          userName: "",
-          email: "",
-          password: "",
-          image: "",
-        });
-
-        toast.success("Success Notification !");
-      } catch (error) {
-        console.log(error);
-        toast.error("حدث خطأ في عملية التسجيل!");
-      }
     }
   };
   return (
@@ -115,7 +139,8 @@ function Signup() {
               <input type="file" name="image" onChange={handelChangeimg} />
               <br />
               <br /> <br />
-              <button type="submit">submit</button>
+              <button type="submit" className="btn btn-outline-success" disabled={loader?'disabled':null}>
+               {!loader?'Register' : 'wait....'} </button>
             </form>
             <p>
               Do You Have An Account? <Link to="/signin">Sign In!</Link>

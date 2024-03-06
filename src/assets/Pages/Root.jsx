@@ -6,9 +6,10 @@ import { ToastContainer } from "react-toastify";
 function Root() {
   return (
     <>
-      <ToastContainer position="top-right" />
       <Navbar />
       <Outlet />
+      <ToastContainer />
+
     </>
   );
 }
