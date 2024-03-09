@@ -7,8 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [errors, setError] = useState([]);
-  const navgate=useNavigate();
-  const [loader,setLoadr]=useState(false);
+  const navgate = useNavigate();
+  const [loader, setLoadr] = useState(false);
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -29,9 +29,41 @@ function Signup() {
       [name]: files[0],
     });
   };
+  const validationData = async () => {
+    const regiSchema = object({
+      userName: string().required().min(5).max(20),
+      email: string().email().required(),
+      password: string().required().min(5).max(20),
+      image: string().required(),
+    });
+
+    try {
+      await regiSchema.validate(user, { abortEarly: false });
+      setError([]); // Clear any previous errors
+      return true; // Validation succeeded
+    } 
+    catch (err) {
+      setError(err.errors);
+      setLoadr(false);
+      errors.map((err) => {
+        return toast.error(err, {
+          position: "bottom-center",
+          autoClose: 5018,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      });
+      return false; // Validation failed
+    }
+  };
   const handelSubmit = async (e) => {
     e.preventDefault();
-    setLoadr(true)
+    setLoadr(true);
     if (await validationData()) {
       const fromData = new FormData();
       fromData.append("userName", user.userName);
@@ -63,51 +95,20 @@ function Signup() {
             transition: Bounce,
           });
         }
-        navgate('/')
-      } catch (err) {
-        toast.error("حدث خطأ أثناء التسجيل!", {
-            position: "bottom-center",
-            autoClose: 5018,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Bounce,
-          });
-      }
-      finally {
+        navgate("/signin");
+      } 
+      catch (err) {
+        setLoadr(false);
+        setError(err.errors);
+      } finally {
         setLoadr(false);
       }
     }
   };
 
-const validationData = async () => {
-    const regiSchema = object({
-      userName: string().required().min(5).max(20),
-      email: string().email().required(),
-      password: string().required().min(5).max(20),
-      image: string().required(),
-    });
-
-    try {
-      await regiSchema.validate(user, { abortEarly: false });
-      setError([]); // Clear any previous errors
-      return true; // Validation succeeded
-    } catch (err) {
-      setError(err.errors);
-      setLoadr(false);
-      return false; // Validation failed
-    }
-  };
+  
   return (
     <>
-      <div>
-        {errors.length > 0
-          ? errors.map((x, index) => <p key={index}>{x}</p>)
-          : ""}
-      </div>
       <div className="main-w3layouts wrapper bacgco">
         <h1>Create new account</h1>
         <div className="main-agileinfo">
@@ -139,8 +140,13 @@ const validationData = async () => {
               <input type="file" name="image" onChange={handelChangeimg} />
               <br />
               <br /> <br />
-              <button type="submit" className="btn btn-outline-success" disabled={loader?'disabled':null}>
-               {!loader?'Register' : 'wait....'} </button>
+              <button
+                type="submit"
+                className="btn btn-outline-success"
+                disabled={loader ? "disabled" : null}
+              >
+                {!loader ? "Register" : "wait...."}{" "}
+              </button>
             </form>
             <p>
               Do You Have An Account? <Link to="/signin">Sign In!</Link>

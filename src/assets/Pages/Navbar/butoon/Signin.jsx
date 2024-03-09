@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "./Signup.css";
 import axios from "axios";
 import { object, string } from "yup";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signin() {
   const [errors, setError] = useState([]);
-
+  const navgate = useNavigate();
+  const [loader, setLoadr] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -26,48 +27,71 @@ function Signin() {
       [name]: files[0],
     });
   };
-  const validationData = async () => {
-    const regiSchema = object({
-      email: string().email().required(),
-      password: string().required().min(5).max(20),
-    });
-
-    try {
-      await regiSchema.validate(user, { abortEarly: false });
-      setError('');
-
-      return true; // Validation succeeded
-    } catch (err) {
-      console.log("err", err.errors);
-      setError(err.errors);
-      return false; // Validation failed
-    }
-  };
+  
   const handelSubmit = async (e) => {
     e.preventDefault();
+    setLoadr(true);
+
     if (await validationData()) {
       try {
         const { data } = await axios.post(
           `${import.meta.env.VITE_API}/auth/signin`,
-          { user }
+          {   email: user.email,
+          password: user.password, }
         );
 
         setUser({
           email: "",
           password: "",
         });
+        localStorage.setItem('userToken', data.token);
+        console.log(data)
         toast.success("Success Notification !");
-      } catch (error) {
-        toast.error("حدث خطأ في عملية الدخول!");
+        navgate("/Categories");
       }
+      catch (err) {
+        setLoadr(false);
+        setError(err.errors);
+      } finally {
+        setLoadr(false);
+      }
+      
     }
   };
+  const validationData = async () => {
+    const logSchema = object({
+      email: string().email().required(),
+      password: string().required().min(5).max(20),
+    });
 
+    try {
+      await logSchema.validate(user, { abortEarly: false });
+      setError([]);
+
+      return true; // Validation succeeded
+    } 
+    catch (err) {
+      setError(err.errors);
+      setLoadr(false);
+      errors.map((err) => {
+        return toast.error(err, {
+          position: "bottom-center",
+          autoClose: 5018,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      });
+      return false; // Validation failed
+    }
+  };
   return (
     <>
-      {errors.length > 0
-        ? errors.map((x, index) => <p key={index}>{x}</p>)
-        : " "}
+     
 
       <div className="main-w3layouts wrapper bacgco">
         <h1>Create new account</h1>
@@ -87,9 +111,14 @@ function Signin() {
                 name="password"
                 value={user.password}
                 onChange={handelChange}
-              />
-              <button type="submit" defaultValue="SIGNUP">
-                Submit
+              />            
+              <button
+                type="submit"
+                defaultValue="SIGNUP"
+                className="btn btn-outline-success"
+             
+              >
+                SIGNUP
               </button>
             </form>
             <p>

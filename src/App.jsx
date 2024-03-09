@@ -10,6 +10,8 @@ import Signin from './assets/Pages/Navbar/butoon/Signin';
 import Signup from './assets/Pages/Navbar/butoon/Signup';
 import Notfound from './assets/Pages/Notfouend/Notfound';
 import Produtc from './assets/Pages/Produtc/Produtc';
+import protectedRoutes from './assets/Pages/auth/protectedRoutes';
+import unProtectedRoutes from './assets/Pages/auth/unProtectedRoutes';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,7 +21,8 @@ function App() {
       children: [
         {
           path:'/',
-          element: <Home/>,
+          element: 
+<Home/>,
         },
         {
           path: "/Home",
@@ -28,11 +31,15 @@ function App() {
         },
         {
           path: "/Categories",
-          element: <Categories/>,
+          element: 
+          <protectedRoutes>
+            <Categories/>
+            </protectedRoutes>,
         },
         {
           path: "/Products/:id",
-          element: <Products/>,
+          element:
+           <Products/>,
         },
         {
           path: "/Products/:id/Produtc/:id",
@@ -44,7 +51,10 @@ function App() {
         },
         {
           path: "/signin",
-          element: <Signin/>,
+          element:
+          <unProtectedRoutes>
+<Signin/>
+          </unProtectedRoutes> ,
         }, 
         {
           path: "/signup",
