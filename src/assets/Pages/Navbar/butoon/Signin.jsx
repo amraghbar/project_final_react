@@ -39,13 +39,12 @@ function Signin() {
           {   email: user.email,
           password: user.password, }
         );
-
+console.log(data);
         setUser({
           email: "",
           password: "",
         });
-        localStorage.setItem('userToken', data.token);
-        console.log(data)
+       localStorage.setItem("userToken",data.token)
         toast.success("Success Notification !");
         navgate("/Categories");
       }
@@ -118,7 +117,8 @@ function Signin() {
                 className="btn btn-outline-success"
              
               >
-                SIGNUP
+                
+                {!loader ? "SIGNUP" : "wait...."}
               </button>
             </form>
             <p>

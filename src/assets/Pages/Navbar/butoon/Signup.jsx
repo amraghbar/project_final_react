@@ -145,7 +145,7 @@ function Signup() {
                 className="btn btn-outline-success"
                 disabled={loader ? "disabled" : null}
               >
-                {!loader ? "Register" : "wait...."}{" "}
+                {!loader ? "Register" : "wait...."}
               </button>
             </form>
             <p>
