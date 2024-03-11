@@ -3,6 +3,7 @@ import { Link, NavLink, useParams } from "react-router-dom";
 import "./Navbar.css";
 import style from "../Carts/Cartshop.module.css";
 import { Button, Offcanvas } from "react-bootstrap";
+import Carshop from "../Carts/Carshop";
 
 function Navbar() {
   const [show, setShow] = useState(false);
@@ -106,7 +107,7 @@ function Navbar() {
                   </ul>
                 </li>
               </button>
-              <NavLink className="nav-item bg-danger" to="./Carshop">
+              <NavLink className="nav-item bg-danger" to="/">
                 <button
                   className={`btn" btn-outline-success nav-item bg-danger ${style.btncl}`}
                   type="submit"
@@ -133,7 +134,9 @@ function Navbar() {
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title>Shopping cart</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>حلوه ولا مش حلوه</Offcanvas.Body>
+                <Offcanvas.Body>
+                  <Carshop/>
+                     </Offcanvas.Body>
               </Offcanvas>
             </form>
           </div>

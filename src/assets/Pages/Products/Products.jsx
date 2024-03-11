@@ -56,7 +56,7 @@ function Products() {
                       </p>
                       <Link
                         to={`Produtc/${category._id}`}
-                        class="btn btn-primary"
+                        className="btn btn-primary"
                       >
                         Go Details
                       </Link>

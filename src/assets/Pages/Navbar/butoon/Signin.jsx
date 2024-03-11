@@ -34,9 +34,8 @@ function Signin() {
 
     if (await validationData()) {
       try {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API}/auth/signin`,
-          {   email: user.email,
+        const { data } = await axios.post( `${import.meta.env.VITE_API}/auth/signin`,
+       {   email: user.email,
           password: user.password, }
         );
 console.log(data);

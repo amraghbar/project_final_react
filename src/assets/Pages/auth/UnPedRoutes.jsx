@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 function unProtectedRoutes({child}) {
     const token=localStorage.getItem('userToken');
-    if(!token){
+    if(token){
       return child;
     }
   return <Navigate to='/home'  replace/>

@@ -26,10 +26,9 @@ function App() {
         },
         {
           path: "/Categories",
-          element:  <PRoutes>
+          element: (
               <Categories />
-            </PRoutes>
-          ,
+          ),
         },
         {
           path: "/Products/:id",
@@ -41,15 +40,21 @@ function App() {
         },
         {
           path: "/Carshop",
-          element: <Carshop />,
+          element: 
+          <PRoutes>
+ <Carshop />
+          </PRoutes>
+         ,
         },
         {
           path: "/signin",
-          element: <Signin />,
+          element: <Signin />
+          ,
         },
         {
           path: "/signup",
-          element: <Signup />,
+          element:<Signup />
+          ,
         },
         {
           path: "*",
