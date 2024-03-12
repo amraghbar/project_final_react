@@ -10,6 +10,7 @@ import Signup from "./assets/Pages/Navbar/butoon/Signup";
 import Notfound from "./assets/Pages/Notfouend/Notfound";
 import Produtc from "./assets/Pages/Produtc/Produtc";
 import PRoutes from "./assets/Pages/auth/PRoutes";
+import UserContextProvider from "./assets/Pages/Context/User";
 function App() {
   const router = createBrowserRouter([
     {
@@ -66,7 +67,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+    <UserContextProvider>
+    <RouterProvider router={router} />
+    </UserContextProvider>
     </>
   );
 }
