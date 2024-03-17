@@ -8,7 +8,7 @@ function Categories() {
   const [categories, setCategories] = useState([]);
 
   const getData = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API}/categories/active?page=1&limit=9`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API}/categories/active?page=1&limit=9`,);
   
     setCategories(data.categories);
   };
@@ -17,6 +17,9 @@ function Categories() {
 
   useEffect(() => {
     getData();
+    return ()=> {
+      console.log("bye")
+    }
   }, []);
 
   
@@ -36,7 +39,7 @@ function Categories() {
           <div>
             <h2>{x.name}</h2>
             <img src={x.image.secure_url} alt="" />
-            <Link to={`/Products/${x._id}`}> Details</Link> 
+            <Link to={`/Categories/${x._id}`}> Details</Link> 
           </div>
         </SwiperSlide>
       ))}

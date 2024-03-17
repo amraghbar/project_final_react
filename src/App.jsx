@@ -10,7 +10,11 @@ import Signup from "./assets/Pages/Navbar/butoon/Signup";
 import Notfound from "./assets/Pages/Notfouend/Notfound";
 import Produtc from "./assets/Pages/Produtc/Produtc";
 import PRoutes from "./assets/Pages/auth/PRoutes";
-import UserContextProvider from "./assets/Pages/Context/User";
+import UserContextProvider from "./assets/Context/User";
+import Caprodut from "./assets/Pages/Categories/Caprodut";
+import Sendcode from "./assets/Pages/ForgetPass/Sendcode";
+import ForgetPassword from "./assets/Pages/ForgetPass/ForgetPassword";
+import Order from "./assets/Pages/Order/Order";
 function App() {
   const router = createBrowserRouter([
     {
@@ -27,35 +31,46 @@ function App() {
         },
         {
           path: "/Categories",
-          element: (
-              <Categories />
-          ),
+          element: <Categories />,
         },
         {
-          path: "/Products/:id",
+          path: "/Categories/:id",
+          element: <Caprodut />,
+        },
+        {
+          path: "/Products",
           element: <Products />,
         },
         {
-          path: "/Products/:id/Produtc/:id",
+          path: "/Categories/:id/Produtc/:id",
           element: <Produtc />,
         },
         {
-          path: "/Carshop",
-          element: 
-          <PRoutes>
- <Carshop />
-          </PRoutes>
-         ,
+          path:"/sendcode",
+          element:<Sendcode/>
+        },
+        {
+          path:"/ForgetPassword",
+          element:<ForgetPassword/>,
+        },
+        {
+          path: "/cart",
+          element:
+              <Carshop />
+          ,
         },
         {
           path: "/signin",
-          element: <Signin />
-          ,
+          element: <Signin />,
         },
         {
           path: "/signup",
-          element:<Signup />
-          ,
+          element: <Signup />,
+        },
+        {
+          path:"/Order",
+          element: <Order />,
+
         },
         {
           path: "*",
@@ -67,9 +82,9 @@ function App() {
 
   return (
     <>
-    <UserContextProvider>
-    <RouterProvider router={router} />
-    </UserContextProvider>
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
     </>
   );
 }

@@ -1,43 +1,44 @@
-import React, { useContext, useState } from "react";
-import "./Signup.css";
+import React, { useState } from "react";
+import "./ForgetPass.css";
 import axios from "axios";
 import { object, string } from "yup";
 import { Bounce, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../../Context/User";
 
-function Signin() {
-  const { setUserToken } = useContext(UserContext)
-  const [errors, setError] = useState([]);
-  const navgate = useNavigate();
-  const [loader, setLoadr] = useState(false);
+function ForgetPassword() {
+  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
+    code: "",
   });
-  const handelChange = (e) => {
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
       ...user,
       [name]: value,
     });
   };
-  
-  const validationData = async () => {
+
+  const validateData = async () => {
     const logSchema = object({
       email: string().email().required(),
       password: string().required().min(5).max(20),
+      code: string().required().min(4).max(4),
     });
 
     try {
       await logSchema.validate(user, { abortEarly: false });
-      setError([]);
+      setErrors([]);
 
       return true; // Validation succeeded
     } catch (err) {
-      setError(err.errors);
-      setLoadr(false);
-      errors.map((err) => {
+      setErrors(err.errors);
+      setLoading(false);
+      err.errors.map((err) => {
         return toast.error(err, {
           position: "bottom-center",
           autoClose: 5018,
@@ -53,92 +54,82 @@ function Signin() {
       return false; // Validation failed
     }
   };
-  const handelSubmit = async (e) => {
-    e.preventDefault();
-    setLoadr(true);
 
-    if (await validationData()) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (await validateData()) {
       try {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API}/auth/signin`,
-          { email: user.email, password: user.password }
+        const { data } = await axios.patch(
+          `${import.meta.env.VITE_API}/auth/forgotPassword`,
+          { ...user }
         );
         console.log(data);
         setUser({
           email: "",
           password: "",
+          code: "",
         });
-        setUserToken(data.token);
         toast.success("Success Notification !");
-        navgate("/Categories");
-
+        navigate("/signin");
       } catch (err) {
-        setLoadr(false);
-        setError(err.errors);
+        setLoading(false);
+        setErrors(err.errors);
+        toast.error("Error sending reset password email. Please try again.");
       } finally {
-        setLoadr(false);
+        setLoading(false);
       }
     }
   };
- 
+
   return (
     <>
       <div className="main-w3layouts wrapper bacgco">
         <h1>Create new account</h1>
         <div className="main-agileinfo">
           <div className="agileits-top">
-            <form onSubmit={handelSubmit}>
-              <label> Email</label>
+            <form onSubmit={handleSubmit}>
+              <label>Email</label>
               <input
                 type="email"
                 name="email"
                 value={user.email}
-                onChange={handelChange}
+                onChange={handleChange}
               />
-              <label> Password</label>
+              <label>Password</label>
               <input
                 type="password"
                 name="password"
                 value={user.password}
-                onChange={handelChange}
+                onChange={handleChange}
+              />
+              <label>Code</label>
+              <input
+                type="text"
+                name="code"
+                value={user.code}
+                onChange={handleChange}
               />
               <button
                 type="submit"
-                defaultValue="SIGNUP"
                 className="btn btn-outline-success"
+                disabled={loading}
               >
-                {!loader ? "SIGNUP" : "wait...."}
+                {!loading ? "Submit" : "Please wait..."}
               </button>
             </form>
-            <p>
-              <Link to="/signup">Create new account</Link>
-            </p>
-            <p>
-              <Link to="/sendcode">Forget Password</Link>
-            </p>
+           
           </div>
         </div>
         <ul className="colorlib-bubbles">
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {[...Array(16)].map((_, index) => (
+            <li key={index}></li>
+          ))}
         </ul>
       </div>
     </>
   );
 }
 
-export default Signin;
+export default ForgetPassword;

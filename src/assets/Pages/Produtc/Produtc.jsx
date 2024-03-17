@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { cartItems } from '../Carts/Carshop.jsx';
 import { Bounce, toast } from "react-toastify";
 
 function Produtc() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null); // Initialize product state with null
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-   const setAddCart= (data)=> {
-   const x=  cartItems.push(data);
-    if(x) {
+  const controller =new AbortController();
+
+   const setAddCart=  async (productId)=> {
+    const token =localStorage.getItem('userToken')
+   const {data} = await axios.post(
+    `${import.meta.env.VITE_API}/cart`,
+    {
+      productId
+    },
+    {
+      headers: {
+        Authorization: `Tariq__${token}`,
+      },
+      
+    },
+   
+  );
+  console.log(data)
+    if(data) {
       toast.success('تم الاضافة بنجاح ', {
         position: "bottom-center",
         autoClose: 5000,
@@ -37,6 +51,8 @@ function Produtc() {
     };
 
     fetchData();
+    return ()=> {
+    }
   }, [id]);
 
   return (
@@ -45,7 +61,6 @@ function Produtc() {
         <div>Loading...</div>
       ) : (
         <>
-          <h4>Product ID: {id}</h4>
           <div className="row row-cols-1 row-cols-md-2 g-4">
             <div className="col">
               <div className="mb-3">
@@ -67,12 +82,8 @@ function Produtc() {
                       <p className="card-text">{product?.slug}</p> 
                       <p className="card-text">{product?.price}$</p> 
                       <p className="card-text">{product?.status}</p> 
-                      <div>
-                        <button onClick={() => setQuantity(Math.max(0, quantity - 1))}>-</button>
-                        <span>{quantity}</span>
-                        <button onClick={() => setQuantity(quantity + 1)}>+</button>
-                      </div>
-                      <button onClick={() => setAddCart({ ...product, quantity })}>
+                      
+                      <button onClick={() => setAddCart(product._id)}>
                         Add to Cart
                       </button>
                     </div>

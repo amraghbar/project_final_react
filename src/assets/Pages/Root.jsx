@@ -5,12 +5,11 @@ import { ToastContainer } from "react-toastify";
 
 function Root() {
   return (
-    <>
+    <div className="container-fluid">
       <Navbar />
       <Outlet />
       <ToastContainer />
-
-    </>
+    </div>
   );
 }
 
