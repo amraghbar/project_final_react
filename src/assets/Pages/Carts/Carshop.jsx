@@ -346,10 +346,9 @@ function Carshop() {
 
                       <MDBBtn color="red" block size="lg">
                         <Link
-                          to={{
-                            pathname: "/Order",
-                            state: { cartItems: cartItems },
-                          }}
+                          to="/Order"
+                
+                          state={{ cartItems }}
                           
                           style={{
                             backgroundColor: "red",
