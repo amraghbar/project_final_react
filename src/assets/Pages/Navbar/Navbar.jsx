@@ -7,7 +7,7 @@ import { UserContext } from "../../Context/User";
 
 function Navbar() {
   const [show, setShow] = useState(false);
-  const { userName, setUserToken, setUserName, userToken } =
+  const { userName, userToken } =
     useContext(UserContext);
   const navigate = useNavigate();
   const logout = () => {
@@ -18,10 +18,12 @@ function Navbar() {
   const handleShow = () => setShow(true);
   return (
     <>
-      <nav className="  navbar navbar-expand-md bg-danger position-sticky shadow p-4 mb-8  rounded ">
+<nav className="navbar navbar-expand-md bg-danger fixed-bottom sticky-top shadow p-4 mb-8 rounded ">
+
         <div className="container-fluid">
-          <Link className="navbar-brand text-primary" to="/">
-            Shope
+          <Link className="navbar-brand text-primary col-2" to="/">
+          <img src="6862535.png" style={{ width: '47%' }} />
+
           </Link>
           <button
             className="navbar-toggler"
@@ -34,7 +36,10 @@ function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div
+            className="collapse navbar-collapse gap-3"
+            id="navbarSupportedContent"
+          >
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink className="nav-link text-light" to="/">
@@ -52,40 +57,61 @@ function Navbar() {
             {userToken ? (
               <>
                 <div
-                  className="collapse navbar-collapse"
+                  className="collapse navbar-collapse "
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <NavLink className="nav-link text-light" to="/Categories">
                       Categories
                     </NavLink>
+                    
                     <NavLink className="nav-link text-light">
                       welcome {userName}
                     </NavLink>
                   </ul>
-                  <div>
-                    <NavLink className="nav-item bg-danger" to="/cart">
-                      <button
-                        className={`btn" btn-outline-success nav-item bg-danger ${style.btncl}`}
-                        type="submit"
-                        onClick={handleShow}
-                      >
+                  <div className="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                    <div>
+                      <NavLink className="nav-link text-light" to="/Profile">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="22"
-                          height="30"
+                          width="39"
+                          height="32"
                           fill="currentColor"
                           className="bi bi-cart-dash text-light"
                           viewBox="0 0 16 16"
                         >
-                          <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z" />
-                          <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                          <path
+                            fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                          />
                         </svg>
-                      </button>
-                    </NavLink>
+                      </NavLink>
+                    </div>
+                    <div>
+                      <NavLink className="nav-item bg-danger" to="/cart">
+                        <button
+                          className={`btn" btn-outline-success nav-item bg-danger ${style.btncl}`}
+                          type="submit"
+                          onClick={handleShow}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="22"
+                            height="30"
+                            fill="currentColor"
+                            className="bi bi-cart-dash text-light btn-outline-dark"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z" />
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                          </svg>
+                        </button>
+                      </NavLink>
+                    </div>
                   </div>
                 </div>
-                <Button onClick={logout} className="btn btn-outline-danger">
+                <Button onClick={logout} className="btn  ">
                   Log out{" "}
                 </Button>
               </>

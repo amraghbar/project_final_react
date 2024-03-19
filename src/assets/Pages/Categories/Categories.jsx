@@ -26,7 +26,7 @@ function Categories() {
   return (
     <>
       <div style={{ paddingTop: '50px' }}>
-      <h2 style={{ backgroundColor: '#f8c291', color: '#6a89cc', padding: '10px', borderRadius: '5px', marginTop: '20px',  textAlign: 'center' }}>Categories</h2>
+      <h2 style={{ backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '5px', marginTop: '20px',  textAlign: 'center' }}>Categories</h2>
     </div>
      <Swiper
        spaceBetween={40}

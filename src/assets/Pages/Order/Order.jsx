@@ -37,10 +37,7 @@ function Order() {
     const logSchema = object({
       Coupon: string(),
       Address: string().required(),
-      PhoneNumber: string()
-        .required()
-        .min(5)
-        .max(20),
+      PhoneNumber: string().required().min(5).max(20),
     });
 
     try {
@@ -69,14 +66,24 @@ function Order() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("userToken");
+
     setLoader(true);
     if (await validateData()) {
       try {
-        const { data } = await axios.post(`${import.meta.env.VITE_API}/order`, {
-          Coupon: order.Coupon,
-          Address: order.Address,
-          PhoneNumber: order.PhoneNumber,
-        });
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API}/order`,
+          {
+            couponName: order.Coupon,
+            address: order.Address,
+            phone: order.PhoneNumber,
+          },
+          {
+            headers: {
+              Authorization: `Tariq__${token}`,
+            },
+          }
+        );
         console.log(data);
         setOrder({
           Coupon: "",
@@ -85,16 +92,46 @@ function Order() {
         });
         setUserToken(data.token);
         toast.success("Order successful!");
-        navigate("/Categories");
+        navigate("/Profile");
       } catch (err) {
         setLoader(false);
         setErrors(err.errors);
-        toast.error("Failed to place order!");
+        toast.error(err.errors);
       } finally {
         setLoader(false);
       }
     }
   };
+//
+const handelCan = async (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem("userToken");
+
+  setLoader(true);
+  try {
+    const { data } = await axios.patch(`${import.meta.env.VITE_API}/order/cancel`,
+      {}, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    );
+    console.log(data);
+    setOrder("");
+    setUserToken(data.token);
+    toast.success("Order canceled successfully!");
+    navigate("/Profile");
+  } catch (err) {
+    setLoader(false);
+    console.error("Failed to cancel order:", err);
+    toast.error("Failed to cancel order!");
+  } finally {
+    setLoader(false);
+  }
+};
+
+
 
   return (
     <div className="d-flex flex-wrap">
@@ -162,9 +199,18 @@ function Order() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="btn btn-outline-success">
-            {!loader ? "Order" : "Please wait..."}
-          </button>
+          <div>
+            <button type="submit" className="btn btn-outline-success">
+              {!loader ? "Order" : "Please wait..."}
+            </button>
+            <button
+              type="button"
+              onClick={handelCan}
+              className="btn btn-outline-success"
+            >
+              {!loader ? "Cancel" : "Please wait..."}
+            </button>
+          </div>
         </form>
       </div>
     </div>

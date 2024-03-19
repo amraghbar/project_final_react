@@ -1,12 +1,12 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom';
 
-function unProtectedRoutes({child}) {
+function unProtectedRoutes({children}) {
     const token=localStorage.getItem('userToken');
-    if(token){
-      return child;
+    if(!token){
+      return children;
     }
-  return <Navigate to='/home'  replace/>
+  return <Navigate to='/signin'  replace/>
 
 }
 

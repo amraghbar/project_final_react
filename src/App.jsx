@@ -15,6 +15,7 @@ import Caprodut from "./assets/Pages/Categories/Caprodut";
 import Sendcode from "./assets/Pages/ForgetPass/Sendcode";
 import ForgetPassword from "./assets/Pages/ForgetPass/ForgetPassword";
 import Order from "./assets/Pages/Order/Order";
+import Profile from "./assets/Pages/Profile/Profile";
 function App() {
   const router = createBrowserRouter([
     {
@@ -31,11 +32,14 @@ function App() {
         },
         {
           path: "/Categories",
-          element: <Categories />,
+          element: 
+          <Categories />,
         },
         {
           path: "/Categories/:id",
-          element: <Caprodut />,
+          element: <PRoutes>
+          <Caprodut />
+          </PRoutes>,
         },
         {
           path: "/Products",
@@ -43,21 +47,35 @@ function App() {
         },
         {
           path: "/Categories/:id/Produtc/:id",
-          element: <Produtc />,
+          element: (
+            <Produtc />
+
+          ),
         },
         {
-          path:"/sendcode",
-          element:<Sendcode/>
+          path: "/sendcode",
+          element: (
+            <Sendcode />
+          ),
         },
         {
-          path:"/ForgetPassword",
-          element:<ForgetPassword/>,
+          path: "/ForgetPassword",
+          element: (
+                        <ForgetPassword />
+
+          ),
+        },
+        {
+          path: "/Profile",
+          element: <Profile />,
         },
         {
           path: "/cart",
-          element:
+          element: (
+            <PRoutes>
               <Carshop />
-          ,
+            </PRoutes>
+          ),
         },
         {
           path: "/signin",
@@ -68,9 +86,12 @@ function App() {
           element: <Signup />,
         },
         {
-          path:"/Order",
-          element: <Order />,
-
+          path: "/Order",
+          element: (
+            <PRoutes>
+              <Order />
+            </PRoutes>
+          ),
         },
         {
           path: "*",
