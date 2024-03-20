@@ -19,7 +19,17 @@ function Caprodut () {
         setCategories(data.products);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.success(error, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
       }
     };
   

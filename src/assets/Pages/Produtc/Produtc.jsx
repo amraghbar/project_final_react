@@ -7,7 +7,7 @@ function Produtc() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const controller =new AbortController();
+ 
 
    const setAddCart=  async (productId)=> {
     const token =localStorage.getItem('userToken')
@@ -51,8 +51,7 @@ function Produtc() {
     };
 
     fetchData();
-    return ()=> {
-    }
+   
   }, [id]);
 
   return (
