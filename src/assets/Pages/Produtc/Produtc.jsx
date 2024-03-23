@@ -1,32 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
 function Produtc() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
- 
 
-   const setAddCart=  async (productId)=> {
-    const token =localStorage.getItem('userToken')
-   const {data} = await axios.post(
-    `${import.meta.env.VITE_API}/cart`,
-    {
-      productId
-    },
-    {
-      headers: {
-        Authorization: `Tariq__${token}`,
+  const setAddCart = async (productId) => {
+    const token = localStorage.getItem("userToken");
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API}/cart`,
+      {
+        productId,
       },
-      
-    },
-   
-  );
-  console.log(data)
-    if(data) {
-      toast.success('تم الاضافة بنجاح ', {
+      {
+        headers: {
+          Authorization: `Tariq__${token}`,
+        },
+      }
+    );
+    if (data) {
+      toast.success("تم الاضافة بنجاح ", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -36,13 +32,16 @@ function Produtc() {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
+      });
     }
-  }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_API}/products/${id}`);
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API}/products/${id}`
+        );
+        console.log(data.product.subImages);
         setProduct(data.product);
         setLoading(false);
       } catch (error) {
@@ -51,7 +50,6 @@ function Produtc() {
     };
 
     fetchData();
-   
   }, [id]);
 
   return (
@@ -64,27 +62,43 @@ function Produtc() {
             <div className="col">
               <div className="mb-3">
                 <div className="row g-0">
-                  <div className="col-md-4">
-                    {product && product.mainImage && ( // Check if product and product.mainImage exist before accessing their properties
-                      <img
-                        src={product.mainImage.secure_url}
-                        style={{ width: "100%", height: "81%" }}
-                        className="img-fluid rounded-start"
-                        alt={product.name}
-                      />
+                  <div className="col-md-4 p-2">
+                    {product && product.mainImage && (
+                      <>
+                        <img
+                          src={product.mainImage.secure_url}
+                          style={{ width: "100%", height: "81%" }}
+                          className="img-fluid rounded-start"
+                          alt={product.name}
+                        />
+                      </>
                     )}
                   </div>
                   <div className="col-md-8">
                     <div className="card-body">
-                      <h5 className="card-title">{product?.name}</h5> 
-                      <p className="card-text">{product?.description}</p> 
-                      <p className="card-text">{product?.slug}</p> 
-                      <p className="card-text">{product?.price}$</p> 
-                      <p className="card-text">{product?.status}</p> 
-                      
+                      <h5 className="card-title">{product?.name}</h5>
+                      <p className="card-text">{product?.description}</p>
+                      <p className="card-text">{product?.slug}</p>
+                      <p className="card-text">{product?.price}$</p>
+                      <p className="card-text">{product?.status}</p>
+                      <div className="d-flex mb-3">
+                        {product.subImages.map((image, index) => (
+                          <img
+                            key={index}
+                            src={image.secure_url}
+                            alt={`Product Image ${index + 1}`}
+                            style={{
+                              width: "100px",
+                              height: "auto",
+                              marginRight: "10px",
+                            }}
+                          />
+                        ))}
+                      </div>
                       <button onClick={() => setAddCart(product._id)}>
                         Add to Cart
                       </button>
+                      <Link to={`review`}>Add Review</Link>
                     </div>
                   </div>
                 </div>

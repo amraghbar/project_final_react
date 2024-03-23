@@ -345,23 +345,37 @@ function Carshop() {
                       </div>
 
                       <MDBBtn color="red" block size="lg">
-                        <Link
-                          to="/Order"
-                
-                          state={{ cartItems }}
-                          
-                          style={{
-                            backgroundColor: "red",
-                            color: "white",
-                            textDecoration: "none",
-                            padding: "8px 16px",
-                            borderRadius: "4px",
-                          }}
-                          onClick={() => handleCheckoutClick(cartItems)}
-                        >
-                          CheckOut
-                        </Link>
-                      </MDBBtn>
+  {itemCount > 0 ? (
+    <Link
+      to="/Order"
+      state={{ cartItems }}
+      style={{
+        backgroundColor: "red",
+        color: "white",
+        textDecoration: "none",
+        padding: "8px 16px",
+        borderRadius: "4px",
+      }}
+      onClick={() => handleCheckoutClick(cartItems)}
+    >
+      CheckOut
+    </Link>
+  ) : (
+    <span
+      style={{
+        backgroundColor: "red",
+        color: "white",
+        textDecoration: "none",
+        padding: "8px 16px",
+        borderRadius: "4px",
+        cursor: "not-allowed",
+      }}
+    >
+      CheckOut
+    </span>
+  )}
+</MDBBtn>
+
                     </div>
                   </MDBCol>
                 </MDBRow>

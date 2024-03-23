@@ -16,6 +16,7 @@ import Sendcode from "./assets/Pages/ForgetPass/Sendcode";
 import ForgetPassword from "./assets/Pages/ForgetPass/ForgetPassword";
 import Order from "./assets/Pages/Order/Order";
 import Profile from "./assets/Pages/Profile/Profile";
+import Review from "./assets/Pages/review/Review";
 function App() {
   const router = createBrowserRouter([
     {
@@ -32,14 +33,15 @@ function App() {
         },
         {
           path: "/Categories",
-          element: 
-          <Categories />,
+          element: <Categories />,
         },
         {
           path: "/Categories/:id",
-          element: <PRoutes>
-          <Caprodut />
-          </PRoutes>,
+          element: (
+            <PRoutes>
+              <Caprodut />
+            </PRoutes>
+          ),
         },
         {
           path: "/Products",
@@ -47,23 +49,15 @@ function App() {
         },
         {
           path: "/Categories/:id/Produtc/:id",
-          element: (
-            <Produtc />
-
-          ),
+          element: <Produtc />,
         },
         {
           path: "/sendcode",
-          element: (
-            <Sendcode />
-          ),
+          element: <Sendcode />,
         },
         {
           path: "/ForgetPassword",
-          element: (
-                        <ForgetPassword />
-
-          ),
+          element: <ForgetPassword />,
         },
         {
           path: "/Profile",
@@ -92,6 +86,10 @@ function App() {
               <Order />
             </PRoutes>
           ),
+        },
+        {
+          path: "/Categories/:id/Produtc/:id/review",
+          element: <Review />,
         },
         {
           path: "*",

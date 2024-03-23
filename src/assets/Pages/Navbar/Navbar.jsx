@@ -7,8 +7,7 @@ import { UserContext } from "../../Context/User";
 
 function Navbar() {
   const [show, setShow] = useState(false);
-  const { userName, userToken } =
-    useContext(UserContext);
+  const { userName, userToken } = useContext(UserContext);
   const navigate = useNavigate();
   const logout = () => {
     setUserName(null);
@@ -18,12 +17,10 @@ function Navbar() {
   const handleShow = () => setShow(true);
   return (
     <>
-<nav className="navbar navbar-expand-md bg-danger fixed-bottom sticky-top shadow p-4 mb-8 rounded ">
-
+      <nav className="navbar navbar-expand-md bg-danger fixed-bottom sticky-top shadow p-4 mb-8 rounded ">
         <div className="container-fluid">
           <Link className="navbar-brand text-primary col-2" to="/">
-          <img src="6862535.png" style={{ width: '47%' }} />
-
+            <img src="6862535.png" style={{ width: "47%" }} />
           </Link>
           <button
             className="navbar-toggler"
@@ -64,7 +61,7 @@ function Navbar() {
                     <NavLink className="nav-link text-light" to="/Categories">
                       Categories
                     </NavLink>
-                    
+
                     <NavLink className="nav-link text-light">
                       welcome {userName}
                     </NavLink>
