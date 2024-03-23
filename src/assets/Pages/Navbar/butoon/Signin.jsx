@@ -63,7 +63,6 @@ function Signin() {
           `${import.meta.env.VITE_API}/auth/signin`,
           { email: user.email, password: user.password }
         );
-        console.log(data);
         setUser({
           email: "",
           password: "",

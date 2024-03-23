@@ -17,9 +17,7 @@ function Categories() {
 
   useEffect(() => {
     getData();
-    return ()=> {
-      console.log("bye")
-    }
+    
   }, []);
 
   

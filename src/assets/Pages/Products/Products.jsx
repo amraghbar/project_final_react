@@ -20,7 +20,6 @@ function Products() {
         setProducts(data.products);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
         // Handle error: display an error message to the user
       }
     };

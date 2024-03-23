@@ -84,7 +84,6 @@ function Order() {
             },
           }
         );
-        console.log(data);
         setOrder({
           Coupon: "",
           Address: "",
@@ -117,14 +116,12 @@ const handelCan = async (e) => {
         },
       }
     );
-    console.log(data);
     setOrder("");
     setUserToken(data.token);
     toast.success("Order canceled successfully!");
     navigate("/Profile");
   } catch (err) {
     setLoader(false);
-    console.error("Failed to cancel order:", err);
     toast.error("Failed to cancel order!");
   } finally {
     setLoader(false);

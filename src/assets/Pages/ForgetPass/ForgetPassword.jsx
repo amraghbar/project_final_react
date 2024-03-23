@@ -65,7 +65,6 @@ function ForgetPassword() {
           `${import.meta.env.VITE_API}/auth/forgotPassword`,
           { ...user }
         );
-        console.log(data);
         setUser({
           email: "",
           password: "",

@@ -27,7 +27,6 @@ function Profile() {
       setUserProfile(profileResponse.data.user);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching profile data:", error);
       setError("Failed to fetch profile data");
       setLoading(false);
     }
@@ -45,10 +44,8 @@ function Profile() {
         }
       );
       setOrders(orderResponse.data.orders);
-      console.log(orderResponse.data.orders);
       setCurrentSection("orders");
     } catch (error) {
-      console.error("Error fetching order data:", error);
       setError("Failed to fetch order data");
     }
   };

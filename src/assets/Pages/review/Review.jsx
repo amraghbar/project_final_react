@@ -7,7 +7,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 function Review() {
   const { id } = useParams();
-  console.log(id);
   const [errors, setError] = useState([]);
   const navgate = useNavigate();
   const [loader, setLoadr] = useState(false);

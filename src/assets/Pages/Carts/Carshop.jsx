@@ -41,7 +41,6 @@ function Carshop() {
       setCartItems(data.products);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching cart items:", error);
     }
   };
 
@@ -74,7 +73,6 @@ function Carshop() {
       );
       setCartItems(updatedCartItems);
     } catch (error) {
-      console.error("Error incrementing quantity:", error);
     }
   };
 
@@ -107,7 +105,6 @@ function Carshop() {
       });
       setCartItems(updatedCartItems);
     } catch (error) {
-      console.error("Error decrementing quantity:", error);
     }
   };
 
@@ -130,7 +127,6 @@ function Carshop() {
       );
       setCartItems(updatedCartItems);
     } catch (error) {
-      console.error("Error removing item:", error);
     }
   };
 
@@ -144,7 +140,6 @@ function Carshop() {
       });
       setCartItems([]);
     } catch (error) {
-      console.error("Error clearing cart:", error);
     }
   };
   const itemCount = cartItems.length;
@@ -163,7 +158,6 @@ function Carshop() {
       theme: "light",
       transition: Bounce,
       });
-    console.log(" cart items:", cartItems);
   }
 
   return (

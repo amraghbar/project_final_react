@@ -41,11 +41,9 @@ function Produtc() {
         const { data } = await axios.get(
           `${import.meta.env.VITE_API}/products/${id}`
         );
-        console.log(data.product.subImages);
         setProduct(data.product);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
       }
     };
 
@@ -95,10 +93,19 @@ function Produtc() {
                           />
                         ))}
                       </div>
-                      <button onClick={() => setAddCart(product._id)}>
-                        Add to Cart
-                      </button>
-                      <Link to={`review`}>Add Review</Link>
+                      <div
+                        className="d-flex justify-content-center align-items-center p-2 gap-2"
+                      >
+                        <button
+                          onClick={() => setAddCart(product._id)}
+                          className="btn btn-outline-primary"
+                        >
+                          Add to Cart
+                        </button>
+                        <Link to={`review`} className="btn btn-outline-info">
+                          Add Review
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

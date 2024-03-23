@@ -49,7 +49,9 @@ function App() {
         },
         {
           path: "/Categories/:id/Produtc/:id",
-          element: <Produtc />,
+          element:             <PRoutes>
+          <Produtc />            </PRoutes>
+          ,
         },
         {
           path: "/sendcode",
@@ -61,7 +63,9 @@ function App() {
         },
         {
           path: "/Profile",
-          element: <Profile />,
+          element:            <PRoutes>
+          <Profile />            </PRoutes>
+          ,
         },
         {
           path: "/cart",
@@ -89,7 +93,8 @@ function App() {
         },
         {
           path: "/Categories/:id/Produtc/:id/review",
-          element: <Review />,
+          element:<PRoutes> <Review />  </PRoutes>
+          ,
         },
         {
           path: "*",
