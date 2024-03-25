@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Select from "react-select";
 
 function Products() {
   const [loading, setLoading] = useState(true);
@@ -9,36 +10,90 @@ function Products() {
   const productsPerPage = 3;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getData = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get(
           `${
             import.meta.env.VITE_API
-          }/products?page=${currentPage}&limit=${productsPerPage}`,{
-          }
+          }/products?page=${currentPage}&limit=${productsPerPage}`
         );
         setProducts(data.products);
         setLoading(false);
       } catch (error) {
-        // Handle error: display an error message to the user
+        console.error('Error fetching products:', error);
       }
     };
 
-    fetchData();
-    
+    getData();
   }, [currentPage]);
 
-  const nextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const prevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+  const handleSelectChange = async (value) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API}/products?page=${currentPage}&limit=${productsPerPage}&sort=${value}`
+      );
+      setProducts(data.products);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
   };
 
   return (
     <div className="container">
       <h1 className="text-center">Products</h1>
+      <div className="d-flex flex-wrap justify-content-between gap-3">
+        <div className="mb-3 d-flex">
+          <Select
+            options={[
+              { value: "name", label: "Name" },
+              { value: "price", label: "Price" },
+              { value: "discount", label: "Discount" },
+              { value: "avgRating", label: "Stars" },
+            ]}
+            onChange={(selectedOption) =>
+              handleSelectChange(selectedOption.value)
+            }
+            placeholder="Sort By"
+            className="outline-danger"
+          />
+        </div>
+
+        <div className="mb-3 d-flex gap-2">
+          <form className="d-flex gap-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="bg-danger"
+            />
+            <button type="submit" className="btn btn-outline-danger shadow-xl">
+              Search
+            </button>
+          </form>
+
+          <form className="d-flex gap-2">
+            <input
+              type="number"
+              placeholder="Min Price"
+              className="bg-danger col-4 text-light"
+            />
+            <input
+              type="number"
+              placeholder="Max Price"
+              className="text-light bg-danger col-4"
+            />
+            <button className="btn btn-outline-primary shadow-sm" type="submit">
+              Apply
+            </button>
+          </form>
+
+          <button type="reset" className="btn btn-danger text-light custom-class mb-2">
+            Reset
+          </button>
+        </div>
+      </div>
       <div className="row">
         {loading ? (
           <p>Loading...</p>
@@ -56,9 +111,10 @@ function Products() {
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="card-text" style={{ width: "100%" }}>
-                    {product.description}
+                    avgRating : {product.avgRating}
                   </p>
                   <p className="card-text">Price: ${product.price}</p>
+                  <p className="card-text"> {product.discount}</p>
                   <Link to={`/Categories/${product._id}/Produtc/${product._id}`}>
                     {" "}
                     Details
@@ -74,43 +130,26 @@ function Products() {
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
             <button
               className="page-link"
-              onClick={prevPage}
+              onClick={() => setCurrentPage((prevPage) => prevPage - 1)}
               disabled={currentPage === 1}
             >
               Previous
             </button>
           </li>
-          <li className="page-item">
-            <button
-              className={`page-link ${currentPage === 1 ? "active" : ""}`}
-              onClick={() => setCurrentPage(1)}
-              disabled={currentPage === 1}
-            >
-              1
-            </button>
-          </li>
-          <li className="page-item">
-            <button
-              className={`page-link ${currentPage === 2 ? "active" : ""}`}
-              onClick={() => setCurrentPage(2)}
-              disabled={currentPage === 2}
-            >
-              2
-            </button>
-          </li>
-          <li className="page-item">
-            <button
-              className={`page-link ${currentPage === 3 ? "active" : ""}`}
-              onClick={() => setCurrentPage(3)}
-              disabled={currentPage === 3}
-            >
-              3
-            </button>
-          </li>
+          {[1, 2, 3].map((page) => (
+            <li key={page} className="page-item">
+              <button
+                className={`page-link ${currentPage === page ? "active" : ""}`}
+                onClick={() => setCurrentPage(page)}
+              >
+                {page}
+              </button>
+            </li>
+          ))}
           <li className="page-item">
             <button
               className="page-link"
-              onClick={nextPage}
+              onClick={() => setCurrentPage((prevPage) => prevPage + 1)}
               disabled={products.length < productsPerPage}
             >
               Next

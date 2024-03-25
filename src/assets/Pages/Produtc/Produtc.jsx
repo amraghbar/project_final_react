@@ -44,6 +44,7 @@ function Produtc() {
         setProduct(data.product);
         setLoading(false);
       } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -94,7 +95,7 @@ function Produtc() {
                         ))}
                       </div>
                       <div
-                        className="d-flex justify-content-center align-items-center p-2 gap-2"
+                        className="d-flex justify-content-center align-items-center p-2"
                       >
                         <button
                           onClick={() => setAddCart(product._id)}

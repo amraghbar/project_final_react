@@ -68,7 +68,7 @@ function Signin() {
           password: "",
         });
         setUserToken(data.token);
-        toast.success("Success Notification !");
+        toast.success("Success SigIn !");
         navgate("/Categories");
 
       } catch (err) {

@@ -7,7 +7,7 @@ import { UserContext } from "../../Context/User";
 
 function Navbar() {
   const [show, setShow] = useState(false);
-  const { userName, userToken } = useContext(UserContext);
+  const { userName, userToken , setUserName, setUserToken } = useContext(UserContext);  
   const navigate = useNavigate();
   const logout = () => {
     setUserName(null);
@@ -73,7 +73,6 @@ function Navbar() {
                           xmlns="http://www.w3.org/2000/svg"
                           width="39"
                           height="32"
-                          fill="currentColor"
                           className="bi bi-cart-dash text-light"
                           viewBox="0 0 16 16"
                         >
@@ -96,7 +95,6 @@ function Navbar() {
                             xmlns="http://www.w3.org/2000/svg"
                             width="22"
                             height="30"
-                            fill="currentColor"
                             className="bi bi-cart-dash text-light btn-outline-dark"
                             viewBox="0 0 16 16"
                           >
@@ -127,7 +125,6 @@ function Navbar() {
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
                         height="16"
-                        fill="currentColor"
                         className="bi bi-search text-light"
                         viewBox="0 0 16 16"
                       >
@@ -149,7 +146,6 @@ function Navbar() {
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
                           height="16"
-                          fill="currentColor"
                           className="bi bi-person-circle text-light "
                           viewBox="0 0 16 16"
                         >
