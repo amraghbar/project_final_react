@@ -5,6 +5,15 @@ import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBBtn,
+  MDBRipple,
+} from "mdb-react-ui-kit";
 
 function Products() {
   const [loading, setLoading] = useState(true);
@@ -14,8 +23,7 @@ function Products() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sortValue, setSortValue] = useState("");
-
-  const productsPerPage = 3;
+  const [productsPerPage, setProductsPerPage] = useState(3); 
 
   const totalNumberOfProducts = 8;
   const totalNumberOfPages = Math.ceil(totalNumberOfProducts / productsPerPage);
@@ -36,61 +44,30 @@ function Products() {
   };
   useEffect(() => {
     getData();
-  }, [currentPage]);
-
-  const handleSelectChange = async (e) => {
-    e.preventdefault();
-    console.log(e);
-    let seot = e;
-    try {
-      setSortValue(seot);
-      setLoading(true);
-      const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_API
-        }/products?page=${currentPage}&limit=10&sort=${sortValue}`
-      );
-      setProducts(data.products.slice(0, 3));
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
+  }, [currentPage, sortValue, searchValue, minPrice, maxPrice , productsPerPage]);
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
   };
-  const DisplayHandleChange = (event) => {
-    e.preventdefault();
-    setLimt(event.target.value);
-  };
-  const handleSearch = async ( e) => {
-    let seot = e;
-    setSearchValue(seot);
-    try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_API
-        }/products?page=${currentPage}&limit=10&sort=${sortValue}&search=${searchValue}`
-      );
-      setProducts(data.products.slice(0, 3));
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
+  const handleMinPriceChange = (event) => {
+    setMinPrice(event.target.value);
   };
 
-  const handlePriceFilter = async () => {
-    e.preventdefault();
-    try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_API
-        }/products?page=${currentPage}&limit=10&sort=${sortValue}&search=${searchValue}&price[gte]=${minPrice}&price[lte]=${maxPrice}`
-      );
-      setProducts(data.products.slice(0, 3));
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
+  const handleMaxPriceChange = (event) => {
+    setMaxPrice(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+  const handleDisplayChange = (event) => {
+
+  setProductsPerPage(event.target.value);
+};
+  const handleReset = () => {
+    setSortValue("");
+    setSearchValue("");
+    setMinPrice("");
+    setMaxPrice("");
   };
 
   return (
@@ -98,17 +75,18 @@ function Products() {
       <h1 className="text-center">Products</h1>
       <div className="d-flex flex-wrap justify-content-between gap-3">
         <div>
-          <form className="d-flex w-75 mb-2" role="number" onSubmit={getData}>
+          <form className="d-flex w-75 mb-2" role="number" onSubmit={handleSubmit}>
             <input
-              className="form-control me-2 "
+              className="form-control col-4"
               type="number"
-              placeholder="Display"
+              placeholder="Enter the number of products"
               aria-label="number"
-              onChange={DisplayHandleChange}
+              min="1"
+              max="8"
+              onChange={handleDisplayChange}
+
             />
-            <button className="btn btn-outline-success" type="submit">
-              Diplay
-            </button>
+      
           </form>
         </div>
         <div className="mb-3 d-flex">
@@ -119,9 +97,7 @@ function Products() {
               { value: "discount", label: "Discount" },
               { value: "avgRating", label: "Stars" },
             ]}
-            onChange={(selectedOption) =>
-              handleSelectChange(selectedOption.value)
-            }
+            onChange={(selectedOption) => setSortValue(selectedOption.value)}
             placeholder="Sort By"
             className="outline-danger"
           />
@@ -133,25 +109,22 @@ function Products() {
               type="text"
               placeholder="Search..."
               className="bg-danger"
-              onChange={handleSearch.value}
+              onChange={handleSearchChange}
             />
-            <button type="submit" className="btn btn-outline-danger shadow-xl">
-              Search
-            </button>
           </form>
 
-          <form className="d-flex gap-2">
+          <form className="d-flex gap-2" onSubmit={handleSubmit}>
             <input
               type="number"
               placeholder="Min Price"
               className="bg-danger col-4 text-light"
-              onChange={handlePriceFilter}
+              onChange={handleMinPriceChange}
             />
             <input
               type="number"
               placeholder="Max Price"
               className="text-light bg-danger col-4"
-              onChange={handlePriceFilter}
+              onChange={handleMaxPriceChange}
             />
             <button className="btn btn-outline-primary shadow-sm" type="submit">
               Apply
@@ -161,27 +134,41 @@ function Products() {
           <button
             type="reset"
             className="btn btn-danger text-light custom-class mb-2"
+            onClick={handleReset}
           >
             Reset
           </button>
         </div>
       </div>
-      <div className="row">
+      <div className="row justify-content-center">
         {loading ? (
           <p>Loading...</p>
         ) : (
           products.map((product) => (
-            <div key={product.id} className="col-md-4 mb-4">
-              <div className="card" style={{ width: "380px" }}>
-                <img
-                  src={product.mainImage.secure_url}
-                  className="card-img-top"
-                  alt={product.name}
-                  style={{ width: "100%", height: "200px" }}
-                  loading="lazy"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
+            <div
+              key={product.id}
+              className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4"
+            >
+              <MDBCard style={{ width: "100%" }} className="mb-4">
+                <MDBRipple
+                  rippleColor="light"
+                  rippleTag="div"
+                  className="bg-image hover-overlay"
+                >
+                  <MDBCardImage
+                    src={product.mainImage.secure_url}
+                    fluid
+                    alt={product.name}
+                  />
+                  <Link>
+                    <div
+                      className="mask"
+                      style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                    ></div>
+                  </Link>
+                </MDBRipple>
+                <MDBCardBody>
+                  <MDBCardTitle>{product.name}</MDBCardTitle>
                   <div className="text-center">
                     {[...Array(Math.round(product.avgRating))].map(
                       (_, index) => (
@@ -203,16 +190,18 @@ function Products() {
                       )
                     )}
                   </div>
-                  <p className="card-text">Price: ${product.price}</p>
-                  <p className="card-text"> {product.discount}</p>
-                  <Link
-                    to={`/Categories/${product._id}/Product/${product._id}`}
-                  >
-                    {" "}
-                    Details
-                  </Link>
-                </div>
-              </div>
+                  <p className="card-text">Price: {product.price}$</p>
+                  <p className="card-text"> Discount :{product.discount}$</p>
+                  <MDBBtn className="bg-danger  ">
+                    <Link
+                      className=" text-decoration-none text-light  btn-outline-dark"
+                      to={`/Categories/${product._id}/products/${product._id}`}
+                    >
+                      Details
+                    </Link>
+                  </MDBBtn>
+                </MDBCardBody>
+              </MDBCard>
             </div>
           ))
         )}

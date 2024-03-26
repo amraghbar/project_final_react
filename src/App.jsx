@@ -48,10 +48,12 @@ function App() {
           element: <Products />,
         },
         {
-          path: "/Categories/:id/Produtc/:id",
-          element:             <PRoutes>
-          <Produtc />            </PRoutes>
-          ,
+          path: "/Categories/:id/products/:id",
+          element: (
+            <PRoutes>
+              <Produtc />{" "}
+            </PRoutes>
+          ),
         },
         {
           path: "/sendcode",
@@ -63,9 +65,11 @@ function App() {
         },
         {
           path: "/Profile",
-          element:            <PRoutes>
-          <Profile />            </PRoutes>
-          ,
+          element: (
+            <PRoutes>
+              <Profile />{" "}
+            </PRoutes>
+          ),
         },
         {
           path: "/cart",
@@ -93,8 +97,12 @@ function App() {
         },
         {
           path: "/Categories/:id/Produtc/:id/review",
-          element:<PRoutes> <Review />  </PRoutes>
-          ,
+          element: (
+            <PRoutes>
+              {" "}
+              <Review />{" "}
+            </PRoutes>
+          ),
         },
         {
           path: "*",

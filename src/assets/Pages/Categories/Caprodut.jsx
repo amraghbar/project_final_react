@@ -70,7 +70,7 @@ function Caprodut () {
                           </small>
                         </p>
                         <Link
-                          to={`Produtc/${category._id}`}
+                          to={`products/${category._id}`}
                           className="btn btn-primary"
                         >
                           Go Details
