@@ -26,7 +26,7 @@ function Products() {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_API
-        }/products?page=${currentPage}&limit=${productsPerPage}`
+        }/products?page=${currentPage}&limit=${productsPerPage}&sort=${sortValue}&search=${searchValue}&price[gte]=${minPrice}&price[lte]=${maxPrice}`
       );
       setProducts(data.products);
       setLoading(false);
@@ -39,6 +39,7 @@ function Products() {
   }, [currentPage]);
 
   const handleSelectChange = async (e) => {
+    e.preventdefault();
     console.log(e);
     let seot = e;
     try {
@@ -67,7 +68,7 @@ function Products() {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_API
-        }/products?page=${currentPage}&limit=10&search=${searchValue}`
+        }/products?page=${currentPage}&limit=10&sort=${sortValue}&search=${searchValue}`
       );
       setProducts(data.products.slice(0, 3));
       setLoading(false);
@@ -76,7 +77,7 @@ function Products() {
     }
   };
 
-  const handlePriceFilter = async (e) => {
+  const handlePriceFilter = async () => {
     e.preventdefault();
     try {
       setLoading(true);
@@ -205,7 +206,7 @@ function Products() {
                   <p className="card-text">Price: ${product.price}</p>
                   <p className="card-text"> {product.discount}</p>
                   <Link
-                    to={`/Categories/${product._id}/Produtc/${product._id}`}
+                    to={`/Categories/${product._id}/Product/${product._id}`}
                   >
                     {" "}
                     Details
