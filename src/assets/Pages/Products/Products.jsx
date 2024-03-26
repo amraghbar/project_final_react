@@ -78,6 +78,7 @@ function Products() {
           <form className="d-flex w-75 mb-2" role="number" onSubmit={handleSubmit}>
             <input
               className="form-control col-4"
+              style={{width: '235px'}}
               type="number"
               placeholder="Enter the number of products"
               aria-label="number"
