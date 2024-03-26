@@ -2,42 +2,93 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 function Products() {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [sortValue, setSortValue] = useState("");
+
   const productsPerPage = 3;
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get(
-          `${
-            import.meta.env.VITE_API
-          }/products?page=${currentPage}&limit=${productsPerPage}`
-        );
-        setProducts(data.products);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    getData();
-  }, [currentPage]);
-
-  const handleSelectChange = async (value) => {
+  const totalNumberOfProducts = 8;
+  const totalNumberOfPages = Math.ceil(totalNumberOfProducts / productsPerPage);
+  const pages = Array.from({ length: totalNumberOfPages }, (_, i) => i + 1);
+  const getData = async () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API}/products?page=${currentPage}&limit=${productsPerPage}&sort=${value}`
+        `${
+          import.meta.env.VITE_API
+        }/products?page=${currentPage}&limit=${productsPerPage}`
       );
       setProducts(data.products);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error("Error fetching products:", error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [currentPage]);
+
+  const handleSelectChange = async (e) => {
+    console.log(e);
+    let seot = e;
+    try {
+      setSortValue(seot);
+      setLoading(true);
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_API
+        }/products?page=${currentPage}&limit=10&sort=${sortValue}`
+      );
+      setProducts(data.products.slice(0, 3));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+  const DisplayHandleChange = (event) => {
+    e.preventdefault();
+    setLimt(event.target.value);
+  };
+  const handleSearch = async ( e) => {
+    let seot = e;
+    setSearchValue(seot);
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_API
+        }/products?page=${currentPage}&limit=10&search=${searchValue}`
+      );
+      setProducts(data.products.slice(0, 3));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const handlePriceFilter = async (e) => {
+    e.preventdefault();
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_API
+        }/products?page=${currentPage}&limit=10&sort=${sortValue}&search=${searchValue}&price[gte]=${minPrice}&price[lte]=${maxPrice}`
+      );
+      setProducts(data.products.slice(0, 3));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
   };
 
@@ -45,6 +96,20 @@ function Products() {
     <div className="container">
       <h1 className="text-center">Products</h1>
       <div className="d-flex flex-wrap justify-content-between gap-3">
+        <div>
+          <form className="d-flex w-75 mb-2" role="number" onSubmit={getData}>
+            <input
+              className="form-control me-2 "
+              type="number"
+              placeholder="Display"
+              aria-label="number"
+              onChange={DisplayHandleChange}
+            />
+            <button className="btn btn-outline-success" type="submit">
+              Diplay
+            </button>
+          </form>
+        </div>
         <div className="mb-3 d-flex">
           <Select
             options={[
@@ -67,6 +132,7 @@ function Products() {
               type="text"
               placeholder="Search..."
               className="bg-danger"
+              onChange={handleSearch.value}
             />
             <button type="submit" className="btn btn-outline-danger shadow-xl">
               Search
@@ -78,18 +144,23 @@ function Products() {
               type="number"
               placeholder="Min Price"
               className="bg-danger col-4 text-light"
+              onChange={handlePriceFilter}
             />
             <input
               type="number"
               placeholder="Max Price"
               className="text-light bg-danger col-4"
+              onChange={handlePriceFilter}
             />
             <button className="btn btn-outline-primary shadow-sm" type="submit">
               Apply
             </button>
           </form>
 
-          <button type="reset" className="btn btn-danger text-light custom-class mb-2">
+          <button
+            type="reset"
+            className="btn btn-danger text-light custom-class mb-2"
+          >
             Reset
           </button>
         </div>
@@ -110,12 +181,32 @@ function Products() {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text" style={{ width: "100%" }}>
-                    avgRating : {product.avgRating}
-                  </p>
+                  <div className="text-center">
+                    {[...Array(Math.round(product.avgRating))].map(
+                      (_, index) => (
+                        <FontAwesomeIcon
+                          icon={solidStar}
+                          className="star"
+                          key={index}
+                          style={{ color: "red" }}
+                        />
+                      )
+                    )}
+                    {[...Array(5 - Math.round(product.avgRating))].map(
+                      (_, index) => (
+                        <FontAwesomeIcon
+                          icon={regularStar}
+                          className="star"
+                          key={index}
+                        />
+                      )
+                    )}
+                  </div>
                   <p className="card-text">Price: ${product.price}</p>
                   <p className="card-text"> {product.discount}</p>
-                  <Link to={`/Categories/${product._id}/Produtc/${product._id}`}>
+                  <Link
+                    to={`/Categories/${product._id}/Produtc/${product._id}`}
+                  >
                     {" "}
                     Details
                   </Link>
@@ -136,7 +227,7 @@ function Products() {
               Previous
             </button>
           </li>
-          {[1, 2, 3].map((page) => (
+          {pages.map((page) => (
             <li key={page} className="page-item">
               <button
                 className={`page-link ${currentPage === page ? "active" : ""}`}

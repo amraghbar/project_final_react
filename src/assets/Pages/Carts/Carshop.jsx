@@ -38,6 +38,7 @@ function Carshop() {
           Authorization: `Tariq__${token}`,
         },
       });
+      console.log(data)
       setCartItems(data.products);
       setIsLoading(false);
     } catch (error) {
@@ -94,7 +95,7 @@ function Carshop() {
           const updatedQuantity = Math.max(
             1,
             data.cart.products.find((p) => p.productId === productId).quantity
-          ); // Ensure quantity is at least 1
+          ); 
           return {
             ...item,
             quantity: updatedQuantity,

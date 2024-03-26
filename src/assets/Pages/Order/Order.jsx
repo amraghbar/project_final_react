@@ -9,6 +9,7 @@ import { UserContext } from "../../Context/User";
 
 function Order() {
   const { state } = useLocation();
+  console.log(state)
   const cartItems = state.cartItems;
   const navigate = useNavigate();
   const { setUserToken } = useContext(UserContext);
@@ -84,6 +85,7 @@ function Order() {
             },
           }
         );
+        console.log(data)
         setOrder({
           Coupon: "",
           Address: "",
@@ -102,31 +104,6 @@ function Order() {
     }
   };
 //
-const handelCan = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("userToken");
-
-  setLoader(true);
-  try {
-    const { data } = await axios.patch(`${import.meta.env.VITE_API}/order/cancel`,
-      {}, 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      }
-    );
-    setOrder("");
-    setUserToken(data.token);
-    toast.success("Order canceled successfully!");
-    navigate("/Profile");
-  } catch (err) {
-    setLoader(false);
-    toast.error("Failed to cancel order!");
-  } finally {
-    setLoader(false);
-  }
-};
 
 
 
@@ -200,13 +177,7 @@ const handelCan = async (e) => {
             <button type="submit" className="btn btn-outline-success">
               {!loader ? "Order" : "Please wait..."}
             </button>
-            <button
-              type="button"
-              onClick={handelCan}
-              className="btn btn-outline-success"
-            >
-              {!loader ? "Cancel" : "Please wait..."}
-            </button>
+            
           </div>
         </form>
       </div>

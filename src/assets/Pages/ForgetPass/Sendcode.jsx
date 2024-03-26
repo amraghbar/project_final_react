@@ -17,7 +17,7 @@ function ForgetPass() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setLoading(true);
 
     try {
@@ -28,6 +28,7 @@ function ForgetPass() {
       await logSchema.validate({ email }, { abortEarly: false });
 
       const { data } = await axios.patch(`${import.meta.env.VITE_API}/auth/sendcode`, { email });
+      console.log(data)
       setMessage(data.message);
       toast.success("Reset code sent successfully!");
       navigate("/ForgetPassword");
