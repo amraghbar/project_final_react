@@ -103,7 +103,7 @@ function Produtc() {
                         >
                           Add to Cart
                         </button>
-                        <Link to={`review`} className="btn btn-outline-info">
+                        <Link to={`/products/${product._id}/review`} className="btn btn-outline-info">
                           Add Review
                         </Link>
                       </div>

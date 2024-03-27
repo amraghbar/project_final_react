@@ -96,11 +96,10 @@ function App() {
           ),
         },
         {
-          path: "/Categories/:id/Produtc/:id/review",
+          path: "/products/:id/review",
           element: (
             <PRoutes>
-              {" "}
-              <Review />{" "}
+              <Review />
             </PRoutes>
           ),
         },
