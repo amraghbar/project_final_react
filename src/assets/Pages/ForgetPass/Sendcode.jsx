@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./ForgetPass.css";
 import axios from "axios";
 import { object, string } from "yup";
 import { Bounce, toast } from "react-toastify";
