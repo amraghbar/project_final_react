@@ -9,10 +9,6 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    getProfile();
-  }, []);
-
   const getProfile = async () => {
     try {
       const token = localStorage.getItem("userToken");
@@ -53,6 +49,9 @@ function Profile() {
   const handleSectionChange = (section) => {
     setCurrentSection(section);
   };
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <div className="d-flex">

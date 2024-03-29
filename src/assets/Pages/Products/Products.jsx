@@ -173,7 +173,7 @@ function Products() {
                     fluid
                     alt={product.name}
                     style={{ width: "200px", height: "230px" }}
-                    ؤ
+                    
                   />
                   <Link>
                     <div

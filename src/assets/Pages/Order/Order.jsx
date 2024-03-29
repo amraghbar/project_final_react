@@ -91,7 +91,7 @@ function Order() {
           Address: "",
           PhoneNumber: "",
         });
-        setUserToken(data.token);
+       // setUserToken(data.token);
         toast.success("Order successful!");
         navigate("/Profile");
       } catch (err) {

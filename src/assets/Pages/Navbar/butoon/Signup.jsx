@@ -36,10 +36,7 @@ function Signup() {
       password: string().required().min(5).max(20),
       image: string()
         .required()
-        .matches(
-          /([a-zA-Z0-9\s_\\.\-():])+(.jpg|.jpeg)$/,
-          "يرجى تحديد ملف صورة من نوع JPG"
-        ),
+        ,
     });
 
     try {
@@ -98,6 +95,17 @@ function Signup() {
             theme: "colored",
             transition: Bounce,
           });
+          toast.success("يرجى تاكيد على الحساب من خلال الايميل!", {
+            position: "bottom-center",
+            autoClose: 5018,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+          });
         }
         navgate("/signin");
       } catch (err) {
@@ -139,16 +147,13 @@ function Signup() {
               />
               <label className="text-light">Image </label>
               <br />
-              <label for="File Image " className="btn btn-light text-danger ">  Choose Image</label>
+              
               <input
                 type="file"
                 id="File Image "
                 name="image"
                 onChange={handelChangeimg}
                 className="text-light"
-                accept=".jpg, .jpeg"
-                Contents="amrr"
-                hidden
               />
               <br />
               <br /> <br />
