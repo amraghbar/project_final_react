@@ -32,7 +32,7 @@ function Profile() {
     }
   };
 
-  const handleIorder = async () => {
+  const handleFetchOrders = async () => {
     try {
       const token = localStorage.getItem("userToken");
       const orderResponse = await axios.get(
@@ -64,10 +64,10 @@ function Profile() {
               onClick={() => handleSectionChange("basic")}
             />
             <SidebarItem
-              text="Email & PassWord"
+              text="Email & Password"
               onClick={() => handleSectionChange("email-password")}
             />
-            <SidebarItem text="Orders" onClick={handleIorder} />
+            <SidebarItem text="Orders" onClick={handleFetchOrders} />
           </div>
         </div>
       </div>
@@ -100,7 +100,37 @@ function SidebarItem({ text, onClick }) {
     </a>
   );
 }
+
 function Orders({ orders }) {
+  const handleDeleteOrder = async (orderId) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const response = await axios.patch(
+        `${import.meta.env.VITE_API}/order/cancel/${orderId}`,
+        null,
+        {
+          headers: {
+            Authorization: `Tariq__${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Order deleted successfully");
+        handleFetchOrders();
+      } else {
+        console.error("Failed to delete order");
+      }
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
+  };
+
+  const confirmDeleteOrder = (orderId) => {
+    if (window.confirm("هل أنت متأكد أنك تريد حذف الطلب؟")) {
+      handleDeleteOrder(orderId);
+    }
+  };
+
   return (
     <div>
       <h2>Orders</h2>
@@ -118,20 +148,26 @@ function Orders({ orders }) {
             <th>couponName</th>
             <th>status</th>
             <th>finalPrice</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {orders.map((order, index) => (
-            <tr key={index}>
-              <td>
-              Order {index + 1}
-              </td>
+            <tr key={order._id}>
+              <td>Order {index + 1}</td>
               <td>{order.address}</td>
               <td>{order.phoneNumber}</td>
               <td>{order.products.length}</td>
               <td>{order.couponName}</td>
               <td>{order.status}</td>
               <td>{order.finalPrice}$</td>
+              <td>
+                {order.status === "pending" && (
+                  <button onClick={() => confirmDeleteOrder(order._id)}>
+                    حذف الطلب
+                  </button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

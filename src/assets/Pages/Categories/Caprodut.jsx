@@ -41,7 +41,6 @@ function Caprodut () {
   
     return (
       <>
-        <h4>Category ID: {id}</h4>
         {loading ? (
           <p>Loading...</p>
         ) : categories.length === 0 ? (
@@ -55,7 +54,7 @@ function Caprodut () {
                     <div className="col-md-4">
                       <img
                         src={category.mainImage.secure_url}
-                        style={{ width: "100%", height: "81%" }}
+                        style={{ width: "200px", height: "220px" }}
                         className="img-fluid rounded-start"
                         alt={category.name}
                       />
@@ -63,7 +62,7 @@ function Caprodut () {
                     <div className="col-md-8">
                       <div className="card-body">
                         <h5 className="card-title">{category.name}</h5>
-                        <p className="card-text">{category.description}</p>
+                        <p className="card-text " style={{ width: "100%"}}>{category.description}</p>
                         <p className="card-text">
                           <small className="text-body-secondary">
                             Last updated 3 mins ago
@@ -71,7 +70,7 @@ function Caprodut () {
                         </p>
                         <Link
                           to={`products/${category._id}`}
-                          className="btn btn-primary"
+                          className="btn btn-danger text-white"
                         >
                           Go Details
                         </Link>

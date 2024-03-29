@@ -23,7 +23,7 @@ function Products() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sortValue, setSortValue] = useState("");
-  const [productsPerPage, setProductsPerPage] = useState(3); 
+  const [productsPerPage, setProductsPerPage] = useState(3);
 
   const totalNumberOfProducts = 8;
   const totalNumberOfPages = Math.ceil(totalNumberOfProducts / productsPerPage);
@@ -44,7 +44,14 @@ function Products() {
   };
   useEffect(() => {
     getData();
-  }, [currentPage, sortValue, searchValue, minPrice, maxPrice , productsPerPage]);
+  }, [
+    currentPage,
+    sortValue,
+    searchValue,
+    minPrice,
+    maxPrice,
+    productsPerPage,
+  ]);
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
@@ -60,9 +67,8 @@ function Products() {
     event.preventDefault();
   };
   const handleDisplayChange = (event) => {
-
-  setProductsPerPage(event.target.value);
-};
+    setProductsPerPage(event.target.value);
+  };
   const handleReset = () => {
     setSortValue("");
     setSearchValue("");
@@ -75,19 +81,21 @@ function Products() {
       <h1 className="text-center">Products</h1>
       <div className="d-flex flex-wrap justify-content-between gap-3">
         <div>
-          <form className="d-flex w-75 mb-2" role="number" onSubmit={handleSubmit}>
+          <form
+            className="d-flex w-75 mb-2"
+            role="number"
+            onSubmit={handleSubmit}
+          >
             <input
               className="form-control col-4"
-              style={{width: '235px'}}
+              style={{ width: "235px" }}
               type="number"
               placeholder="Enter the number of products"
               aria-label="number"
               min="1"
               max="8"
               onChange={handleDisplayChange}
-
             />
-      
           </form>
         </div>
         <div className="mb-3 d-flex">
@@ -141,25 +149,31 @@ function Products() {
           </button>
         </div>
       </div>
-      <div className="row justify-content-center">
+      <div className="row justify-content-center ">
         {loading ? (
           <p>Loading...</p>
         ) : (
           products.map((product) => (
             <div
               key={product.id}
-              className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4"
+              className="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4 d-flex align-items-stretch "
+              style={{ width: "22rem" }}
             >
-              <MDBCard style={{ width: "100%" }} className="mb-4">
+              <MDBCard
+                style={{ width: "100%" }}
+                className="mb-4 align-items-center"
+              >
                 <MDBRipple
                   rippleColor="light"
                   rippleTag="div"
-                  className="bg-image hover-overlay"
+                  className="bg-image hover-overlay  "
                 >
                   <MDBCardImage
                     src={product.mainImage.secure_url}
                     fluid
                     alt={product.name}
+                    style={{ width: "200px", height: "230px" }}
+                    ؤ
                   />
                   <Link>
                     <div
@@ -168,7 +182,7 @@ function Products() {
                     ></div>
                   </Link>
                 </MDBRipple>
-                <MDBCardBody>
+                <MDBCardBody  className="d-flex flex-column flex-wrap" style={{width: '100%',gap: '10px'}}>
                   <MDBCardTitle>{product.name}</MDBCardTitle>
                   <div className="text-center">
                     {[...Array(Math.round(product.avgRating))].map(

@@ -83,18 +83,18 @@ function Signin() {
   return (
     <>
       <div className="main-w3layouts wrapper bacgco">
-        <h1>Create new account</h1>
+        <h1>Login ...</h1>
         <div className="main-agileinfo">
           <div className="agileits-top">
-            <form onSubmit={handelSubmit}>
-              <label> Email</label>
+            <form onSubmit={handelSubmit} className="d-flex flex-wrap gap-2">
+              <label className="text-light"> Email</label>
               <input
                 type="email"
                 name="email"
                 value={user.email}
                 onChange={handelChange}
               />
-              <label> Password</label>
+              <label className="text-light"> Password</label>
               <input
                 type="password"
                 name="password"
@@ -103,10 +103,10 @@ function Signin() {
               />
               <button
                 type="submit"
-                defaultValue="SIGNUP"
-                className="btn btn-outline-success"
+                defaultValue="SIGNIN"
+                className="btn btn-danger"
               >
-                {!loader ? "SIGNUP" : "wait...."}
+                {!loader ? "SIGNIN" : "wait...."}
               </button>
             </form>
             <p>

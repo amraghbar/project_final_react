@@ -34,15 +34,19 @@ function Signup() {
       userName: string().required().min(5).max(20),
       email: string().email().required(),
       password: string().required().min(5).max(20),
-      image: string().required(),
+      image: string()
+        .required()
+        .matches(
+          /([a-zA-Z0-9\s_\\.\-():])+(.jpg|.jpeg)$/,
+          "يرجى تحديد ملف صورة من نوع JPG"
+        ),
     });
 
     try {
       await regiSchema.validate(user, { abortEarly: false });
       setError([]); // Clear any previous errors
       return true; // Validation succeeded
-    } 
-    catch (err) {
+    } catch (err) {
       setError(err.errors);
       setLoadr(false);
       errors.map((err) => {
@@ -96,8 +100,7 @@ function Signup() {
           });
         }
         navgate("/signin");
-      } 
-      catch (err) {
+      } catch (err) {
         setLoadr(false);
         setError(err.errors);
       } finally {
@@ -106,7 +109,6 @@ function Signup() {
     }
   };
 
-  
   return (
     <>
       <div className="main-w3layouts wrapper bacgco">
@@ -114,35 +116,45 @@ function Signup() {
         <div className="main-agileinfo">
           <div className="agileits-top">
             <form onSubmit={handelSubmit}>
-              <label> User name</label>
+              <label className="text-light"> User name</label>
               <input
                 type="text"
                 name="userName"
                 value={user.userName}
                 onChange={handelChange}
               />
-              <label> email</label>
+              <label className="text-light"> email</label>
               <input
                 type="email"
                 name="email"
                 value={user.email}
                 onChange={handelChange}
               />
-              <label> Password</label>
+              <label className="text-light"> Password</label>
               <input
                 type="password"
                 name="password"
                 value={user.password}
                 onChange={handelChange}
               />
-              <label>Image </label>
+              <label className="text-light">Image </label>
               <br />
-              <input type="file" name="image" onChange={handelChangeimg} />
+              <label for="File Image " className="btn btn-light text-danger ">  Choose Image</label>
+              <input
+                type="file"
+                id="File Image "
+                name="image"
+                onChange={handelChangeimg}
+                className="text-light"
+                accept=".jpg, .jpeg"
+                Contents="amrr"
+                hidden
+              />
               <br />
               <br /> <br />
               <button
                 type="submit"
-                className="btn btn-outline-success"
+                className="btn btn-light text-danger"
                 disabled={loader ? "disabled" : null}
               >
                 {!loader ? "Register" : "wait...."}
