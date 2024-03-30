@@ -66,7 +66,7 @@ function Produtc() {
                       <>
                         <img
                           src={product.mainImage.secure_url}
-                          style={{ width: "100%", height: "81%" }}
+                          style={{ width: "100%", height: "auto",  }}
                           className="img-fluid rounded-start"
                           alt={product.name}
                         />
@@ -76,7 +76,8 @@ function Produtc() {
                   <div className="col-md-8">
                     <div className="card-body">
                       <h5 className="card-title">{product?.name}</h5>
-                      <p className="card-text">{product?.description}</p>
+                      <p className="card-text" style={{ width: "150%" }}
+ >{product?.description}</p>
                       <p className="card-text">{product?.slug}</p>
                       <p className="card-text">{product?.price}$</p>
                       <p className="card-text">{product?.status}</p>

@@ -81,7 +81,7 @@ function Profile() {
           <EmailPassword user={userProfile} />
         )}
         {currentSection === "orders" && !loading && !error && (
-          <Orders orders={orders} />
+          <Orders orders={orders} handleFetchOrders={handleFetchOrders} />
         )}
       </div>
     </div>
@@ -100,7 +100,7 @@ function SidebarItem({ text, onClick }) {
   );
 }
 
-function Orders({ orders }) {
+function Orders({ orders, handleFetchOrders }) {
   const handleDeleteOrder = async (orderId) => {
     try {
       const token = localStorage.getItem("userToken");

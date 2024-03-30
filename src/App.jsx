@@ -51,7 +51,15 @@ function App() {
           path: "/Categories/:id/products/:id",
           element: (
             <PRoutes>
-              <Produtc />{" "}
+              <Produtc />
+            </PRoutes>
+          ),
+        },
+        {
+          path: "/products/:id",
+          element: (
+            <PRoutes>
+              <Produtc />
             </PRoutes>
           ),
         },

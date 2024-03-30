@@ -44,7 +44,6 @@ function Categories() {
         {categories.map((x) => (
           <SwiperSlide key={x.id}>
             <div className="row justify-content-center align-items-center">
-              <h2>{x.name}</h2>
               <img
                 src={x.image.secure_url}
                 alt=""
