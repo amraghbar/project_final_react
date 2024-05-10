@@ -38,7 +38,6 @@ function Carshop() {
           Authorization: `Tariq__${token}`,
         },
       });
-      console.log(data)
       setCartItems(data.products);
       setIsLoading(false);
     } catch (error) {
@@ -134,12 +133,13 @@ function Carshop() {
   const handleIClera = async () => {
     try {
       const token = localStorage.getItem("userToken");
-      await axios.patch(`${import.meta.env.VITE_API}/cart/clear`, null, {
+     const{data}=  await axios.patch(`${import.meta.env.VITE_API}/cart/clear`, null, {
         headers: {
           Authorization: `Tariq__${token}`,
         },
       });
       setCartItems([]);
+
     } catch (error) {
     }
   };

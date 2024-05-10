@@ -1,0 +1,31 @@
+@media screen and (max-width: 767px) {
+    .orderWi {
+      width: 100%;
+      background: blue;
+      font-size: 10px;
+    }
+   
+      #table {
+        width: 100%;
+        margin-bottom: 0;
+        background-color: red;
+
+      }
+     #table .table th,
+      .table td {
+        white-space: nowrap;
+      }
+  }
+
+  @media screen and (max-width: 767px) {
+    #table-responsive {
+      overflow-x: auto;
+    }
+  }
+  
+  /* For screens above 767px */
+  @media screen and (min-width: 768px) {
+    #table-responsive {
+      overflow-x: unset;
+    }
+  }

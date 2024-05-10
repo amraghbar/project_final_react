@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import "./pro.css";
 function Profile() {
   const [userProfile, setUserProfile] = useState({});
   const [currentSection, setCurrentSection] = useState("basic");
@@ -54,9 +54,10 @@ function Profile() {
   }, []);
 
   return (
-    <div className="d-flex">
-      <div className="collapse d-block sidebar collapse bg-white col-la-4 col-sm-3 col-xs-2">
-        <div className="position-sticky d-block">
+    <div className="d-flex flex-wrap">
+      {/* Sidebar */}
+      <div className="collapse d-block sidebar collapse bg-white col-lg-4 col-md-3 col-sm-2 d-flex flex-wrap">
+        <div className="position-sticky d-block d-flex flex-wrap">
           <div className="list-group list-group-flush mx-3 mt-4">
             <SidebarItem
               text="Basic information"
@@ -71,7 +72,8 @@ function Profile() {
         </div>
       </div>
 
-      <div className="col-9 col-la-8 col-md-5 col-sm-4">
+      {/* Main Content */}
+      <div className=" col-12 col-lg-4 col-md-9 col-sm-10 col-xs-12 d-flex flex-wrap">
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {currentSection === "basic" && !loading && !error && (
@@ -131,46 +133,47 @@ function Orders({ orders, handleFetchOrders }) {
   };
 
   return (
-    <div>
+    <div className="col-12 d-flex flex-wrap">
       <h2>Orders</h2>
-      <table
-        id="example"
-        className="display table table-bordered table-striped"
-        style={{ width: "100%" }}
-      >
-        <thead>
-          <tr>
-            <th>Name Order</th>
-            <th>Address</th>
-            <th>phoneNumber</th>
-            <th>Number of products</th>
-            <th>couponName</th>
-            <th>status</th>
-            <th>finalPrice</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order, index) => (
-            <tr key={order._id}>
-              <td>Order {index + 1}</td>
-              <td>{order.address}</td>
-              <td>{order.phoneNumber}</td>
-              <td>{order.products.length}</td>
-              <td>{order.couponName}</td>
-              <td>{order.status}</td>
-              <td>{order.finalPrice}$</td>
-              <td>
-                {order.status === "pending" && (
-                  <button onClick={() => confirmDeleteOrder(order._id)}>
-                    حذف الطلب
-                  </button>
-                )}
-              </td>
+      <div id="table-responsive">
+        <table
+          id="table"
+          className="display table table-bordered table-striped"
+        >
+          <thead>
+            <tr>
+              <th>Name Order</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Number of Products</th>
+              <th>Coupon Name</th>
+              <th>Status</th>
+              <th>Final Price</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr key={order._id}>
+                <td>Order {index + 1}</td>
+                <td>{order.address}</td>
+                <td>{order.phoneNumber}</td>
+                <td>{order.products.length}</td>
+                <td>{order.couponName}</td>
+                <td>{order.status}</td>
+                <td>{order.finalPrice}$</td>
+                <td>
+                  {order.status === "pending" && (
+                    <button onClick={() => confirmDeleteOrder(order._id)}>
+                      حذف الطلب
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
